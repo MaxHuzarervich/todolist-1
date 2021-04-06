@@ -30,7 +30,7 @@ function TodoList(props: TodoListPropsType) {
                     <button>+</button>
                 </div>
                 <ul>
-                    { tasks }           //fewfe
+                    { tasks }
                 </ul>
                 <div>
                     <button onClick={()=>props.changeFilter('all')}>All</button>

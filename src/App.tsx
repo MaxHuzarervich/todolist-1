@@ -14,7 +14,7 @@ export type FilterValuesType = 'all'|'active'|'completed'           // comment
 function App() {
 //BLL:
 
-    const [tasks, setTasks] = useState<Array<TaskType>> ([   //tasks старые данные setTasks новые данные
+    const [tasks, setTasks] = useState<Array<TaskType>> ([   //tasks старые данные, setTasks новые данные
         {id: 1, title: 'HTML', isDone: true}, //true
         {id: 2, title: 'CSS', isDone: true},  //true
         {id: 3, title: 'React', isDone: false}, //false
