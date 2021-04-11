@@ -9,7 +9,7 @@ export type TaskType = {
     isDone: boolean
 }
 
-export type FilterValuesType = 'all'|'active'|'completed'           // comment
+export type FilterValuesType = 'all'|'active'|'completed'
 
 function App() {
 //BLL:

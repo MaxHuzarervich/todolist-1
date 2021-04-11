@@ -5,14 +5,14 @@ type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask: (taskID: number) => void    //отсутствие объявленного returna
-    changeFilter: (value:FilterValuesType) => void
+    changeFilter: (value: FilterValuesType) => void
 }
 
 function TodoList(props: TodoListPropsType) {
 
-    const tasks = props.tasks.map( t=> {
+    const tasks = props.tasks.map(t => {                   //чтобы массив tasks преобразовывался
         const removeTask = () => props.removeTask(t.id)
-//t - element массива
+//t - element массива //каждый объект мы преобразуем в li-шку, вместо каждого объекта мы хотим вернуть li-шку
         return <li>
             <input type="checkbox" checked={t.isDone}/>
             <span>{t.title}</span>
@@ -30,12 +30,12 @@ function TodoList(props: TodoListPropsType) {
                     <button>+</button>
                 </div>
                 <ul>
-                    { tasks }
+                    {tasks}
                 </ul>
                 <div>
-                    <button onClick={()=>props.changeFilter('all')}>All</button>
-                    <button onClick={()=>props.changeFilter('active')}>Active</button>
-                    <button onClick={()=>props.changeFilter('completed')}>Completed</button>
+                    <button onClick={() => props.changeFilter('all')}>All</button>
+                    <button onClick={() => props.changeFilter('active')}>Active</button>
+                    <button onClick={() => props.changeFilter('completed')}>Completed</button>
                 </div>
             </div>
         </div>
