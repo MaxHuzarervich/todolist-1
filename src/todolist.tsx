@@ -1,14 +1,17 @@
-import React from 'react';
+import React, {useState, KeyboardEvent} from 'react';
 import {FilterValuesType, TaskType} from './App';
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskID: number) => void    //отсутствие объявленного returna
+    addTask: (title: string) => void
+    removeTask: (taskID: string) => void    //отсутствие объявленного returna
     changeFilter: (value: FilterValuesType) => void  //отсутствие объявленного returna
 }
 
 function TodoList(props: TodoListPropsType) {
+
+    const [title, setTitle] = useState('')
 
     const tasks = props.tasks.map(t => {                   //чтобы массив tasks преобразовывался
         const removeTask = () => props.removeTask(t.id)    //t - element массива //каждый объект мы преобразуем в li-шку,
@@ -20,13 +23,26 @@ function TodoList(props: TodoListPropsType) {
         </li>
     })
 
+    const addTask = () => {
+        props.addTask(title)
+        setTitle('')  }                              //чтобы поле очищалось после добавления новой таски
+
+    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+            if(e.key === 'Enter'){
+            addTask()
+        }
+    }
+
     return (
         <div>
             <div>
                 <h3>{props.title}</h3>
                 <div>
-                    <input/>
-                    <button>+</button>
+                    <input
+                        value={title}
+                        onChange={(e) => setTitle(e.currentTarget.value)}
+                         onKeyPress={onKeyPressAddTask}/>
+                    <button onClick={addTask}>+</button>
                 </div>
                 <ul>
                     {tasks}
