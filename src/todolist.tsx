@@ -1,4 +1,4 @@
-import React, {useState, KeyboardEvent} from 'react';
+import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FilterValuesType, TaskType} from './App';
 
 type TodoListPropsType = {
@@ -13,7 +13,7 @@ function TodoList(props: TodoListPropsType) {
 
     const [title, setTitle] = useState('')
 
-    const tasks = props.tasks.map(t => {                   //чтобы массив tasks преобразовывался
+    const tasksJSXElements = props.tasks.map(t => {                   //чтобы массив tasks преобразовывался
         const removeTask = () => props.removeTask(t.id)    //t - element массива //каждый объект мы преобразуем в li-шку,
                                                            //вместо каждого объекта мы хотим вернуть li-шку
         return <li key={t.id}>
@@ -33,6 +33,11 @@ function TodoList(props: TodoListPropsType) {
         }
     }
 
+    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+    const onClickAllFilter = () => props.changeFilter("all")
+    const onClickActiveFilter = () => props.changeFilter("active")
+    const onClickCompletedFilter = () => props.changeFilter("completed")
+
     return (
         <div>
             <div>
@@ -40,17 +45,17 @@ function TodoList(props: TodoListPropsType) {
                 <div>
                     <input
                         value={title}
-                        onChange={(e) => setTitle(e.currentTarget.value)}
+                        onChange= {onChangeTitle}
                          onKeyPress={onKeyPressAddTask}/>
                     <button onClick={addTask}>+</button>
                 </div>
                 <ul>
-                    {tasks}
+                    {tasksJSXElements}
                 </ul>
                 <div>
-                    <button onClick={() => props.changeFilter('all')}>All</button>
-                    <button onClick={() => props.changeFilter('active')}>Active</button>
-                    <button onClick={() => props.changeFilter('completed')}>Completed</button>
+                    <button onClick={onClickAllFilter}>All</button>
+                    <button onClick={onClickActiveFilter}>Active</button>
+                    <button onClick={onClickCompletedFilter}>Completed</button>
                 </div>
             </div>
         </div>
