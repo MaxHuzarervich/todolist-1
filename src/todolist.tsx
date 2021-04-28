@@ -42,7 +42,7 @@ function TodoList(props: TodoListPropsType) {
         } else {
             setError(true)
         }
-        setTitle('') //чтобы поле очищалось после добавления новой таски
+        setTitle('') //чтобы поле очищалось после добавления новой таски.
 
     }
 
