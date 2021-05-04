@@ -19,6 +19,7 @@ function EditableSpan(props: EditableSpanPropsType) {
         props.changeTitle(title)
     }
 
+
     return (
         editMode
             ? <input value={title}

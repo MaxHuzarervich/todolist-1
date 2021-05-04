@@ -14,6 +14,7 @@ type TodoListPropsType = {
     changeTaskStatus: (taskId: string, newIsDoneValue: boolean, todoListID: string) => void
     removeTodolist: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
+    changeTodolistTitle: (title:string, todoListID: string) => void
 }
 
 function TodoList(props: TodoListPropsType) {
@@ -75,6 +76,8 @@ function TodoList(props: TodoListPropsType) {
 
     const addTask = (title: string) => props.addTask(title, props.todoListID)
 
+    const changeTodolistTitle = (title:string) => props.changeTodolistTitle(title, props.todoListID)
+
     // const errorMessage = error
     //     ? <div style={{color: 'red'}}>Title is required!</div>
     //     : null
@@ -82,7 +85,8 @@ function TodoList(props: TodoListPropsType) {
     return (
         <div>
             <div>
-                <h3>{props.title}
+                <h3>
+                    <EditableSpan title={props.title} changeTitle={changeTodolistTitle} />
                     <button onClick={onClickRemoveTodolist}>*</button>
                 </h3>
                 <AddItemForm addItem={addTask}/>
