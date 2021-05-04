@@ -1,5 +1,7 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FilterValuesType, TaskType} from './App';
+import AddItemForm from "./AddItemForm";
+import EditableSpan from "./EditableSpan";
 
 type TodoListPropsType = {
     todoListID: string
@@ -11,18 +13,23 @@ type TodoListPropsType = {
     changeFilter: (value: FilterValuesType, todoListID: string) => void  //отсутствие объявленного return
     changeTaskStatus: (taskId: string, newIsDoneValue: boolean, todoListID: string) => void
     removeTodolist: (todoListID: string) => void
-
+    changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
 }
 
 function TodoList(props: TodoListPropsType) {
-    debugger
+
     const {filter} = props
     // const filter = props.filter тоже что и выше
-    const [title, setTitle] = useState('')
-    const [error, setError] = useState<boolean>(false)
+    // const [title, setTitle] = useState('')
+    // const [error, setError] = useState<boolean>(false)
+
     const tasksJSXElements = props.tasks.map(t => {
+
         const taskClasses = t.isDone ? 'is-done' : '';
+
         const removeTask = () => props.removeTask(t.id, props.todoListID);
+
+        const changeTaskTitle = (title: string) => props.changeTaskTitle(t.id, title, props.todoListID)
 
         return <li className={taskClasses} key={t.id}>
             <input onChange={(e) => {
@@ -30,40 +37,47 @@ function TodoList(props: TodoListPropsType) {
             }}
                    type="checkbox"
                    checked={t.isDone}/>
-            <span>{t.title}</span>
+            {/*<span>{t.title}</span>*/}
+            <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
             <button onClick={removeTask}>Del</button>
         </li>
     })
 
-    const addTask = () => {
-        const trimmedTitle = title.trim()  //удаляет у строки все пробелы с двух сторон
-        if (trimmedTitle) {
-            props.addTask(trimmedTitle, props.todoListID)
-        } else {
-            setError(true)
-        }
-        setTitle('') //чтобы поле очищалось после добавления новой таски.
+    // const addTask = () => {
+    //     const trimmedTitle = title.trim()  //удаляет у строки все пробелы с двух сторон
+    //     if (trimmedTitle) {
+    //         props.addTask(trimmedTitle, props.todoListID)
+    //     } else {
+    //         setError(true)
+    //     }
+    //     setTitle('') //чтобы поле очищалось после добавления новой таски.
+    //
+    // }
 
-    }
 
+    // const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+    //     if (e.key === 'Enter') {
+    //         addTask()
+    //     }
+    // }
 
-    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addTask()
-        }
-    }
-
-    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
-        setError(false)
-    }
+    // const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
+    //     setTitle(e.currentTarget.value)
+    //     setError(false)
+    // }
     const onClickAllFilter = () => props.changeFilter("all", props.todoListID)
+
     const onClickActiveFilter = () => props.changeFilter("active", props.todoListID)
+
     const onClickCompletedFilter = () => props.changeFilter("completed", props.todoListID)
+
     const onClickRemoveTodolist = () => props.removeTodolist(props.todoListID)
-    const errorMessage = error
-        ? <div style={{color: 'red'}}>Title is required!</div>
-        : null
+
+    const addTask = (title: string) => props.addTask(title, props.todoListID)
+
+    // const errorMessage = error
+    //     ? <div style={{color: 'red'}}>Title is required!</div>
+    //     : null
 
     return (
         <div>
@@ -71,14 +85,15 @@ function TodoList(props: TodoListPropsType) {
                 <h3>{props.title}
                     <button onClick={onClickRemoveTodolist}>*</button>
                 </h3>
-                <div>
-                    <input className={error ? 'error' : ''}
-                           value={title}
-                           onChange={onChangeTitle}
-                           onKeyPress={onKeyPressAddTask}/>
-                    <button onClick={addTask}>+</button>
-                    {errorMessage}
-                </div>
+                <AddItemForm addItem={addTask}/>
+                {/*<div>*/}
+                {/*    <input className={error ? 'error' : ''}*/}
+                {/*           value={title}*/}
+                {/*           onChange={onChangeTitle}*/}
+                {/*           onKeyPress={onKeyPressAddTask}/>*/}
+                {/*    <button onClick={addTask}>+</button>*/}
+                {/*    {errorMessage}*/}
+                {/*</div>*/}
                 <ul>
                     {tasksJSXElements}
                 </ul>
