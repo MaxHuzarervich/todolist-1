@@ -37,7 +37,7 @@ function App() {
     const [tasks, setTasks] = useState<TaskStateType>({
         [todoListID_1]: [
             {id: v1(), title: 'HTML', isDone: true}, //true                  //импортируем v1() alt+enter
-            {id: v1(), title: 'CSS', isDone: true},  //true
+            {id: v1(), title: 'CSS', isDone: false},  //true
             {id: v1(), title: 'React', isDone: true},
         ],
         [todoListID_2]: [
