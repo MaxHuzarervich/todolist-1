@@ -33,16 +33,18 @@ function TodoList(props: TodoListPropsType) {
 
         return <li className={taskClasses} key={t.id}>
             <span className={taskClasses}>
-                {/*<Checkbox*/}
-                {/*color={'primary'}*/}
-                {/*checked={t.isDone}*/}
-                {/*onChange={props.changeTaskStatus}/>*/}
-
-                <input onChange={(e) => {
+                <Checkbox
+                color={'primary'}
+                checked={t.isDone}
+                onChange={(e) => {
                     props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)
-                }}
-                       type="checkbox"
-                       checked={t.isDone}/>
+                }}/>
+
+                {/*<input onChange={(e) => {*/}
+                {/*    props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)*/}
+                {/*}}*/}
+                {/*       type="checkbox"*/}
+                {/*       checked={t.isDone}/>*/}
             <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
             </span>
 
@@ -84,18 +86,18 @@ function TodoList(props: TodoListPropsType) {
                 </ul>
                 <div>
                     <Button size={'small'}
-                            variant={filter === 'all' ? 'contained' : 'outlined'}
+                            variant={filter === 'all' ? 'contained' : 'text'}
                             color={'primary'}
                             onClick={onClickAllFilter}>All</Button>
                     <Button size={'small'}
                             style={{marginLeft: 3}}
-                            variant={filter === 'all' ? 'outlined' : 'contained'}
+                            variant={filter === 'active' ? 'contained' : 'text'}
                             color={'primary'}
                             onClick={onClickActiveFilter}>Active
                     </Button>
                     <Button size={'small'}
                             style={{marginLeft: 3}}
-                            variant={filter === 'all' ? 'outlined' : 'contained'}
+                            variant={filter === 'completed' ? 'contained' : 'text'}
                             color={'primary'}
                             onClick={onClickCompletedFilter}>Completed
                     </Button>

@@ -109,7 +109,7 @@ function App() {
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={10}
-                           style={{padding: '15px', borderRadius: '10px'}}>
+                           style={{padding: '15px', borderRadius: '10px',border:'1px solid lightblue'}}>
                         <TodoList
                             key={tl.id}                   //id for react мы его не используем
                             todoListID={tl.id}
