@@ -2,7 +2,7 @@ import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FilterValuesType, TaskType} from './App';
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, ButtonGroup, Checkbox, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 
 type TodoListPropsType = {
@@ -85,22 +85,25 @@ function TodoList(props: TodoListPropsType) {
                     {tasksJSXElements}
                 </ul>
                 <div>
-                    <Button size={'small'}
-                            variant={filter === 'all' ? 'contained' : 'text'}
-                            color={'primary'}
-                            onClick={onClickAllFilter}>All</Button>
-                    <Button size={'small'}
-                            style={{marginLeft: 3}}
-                            variant={filter === 'active' ? 'contained' : 'text'}
-                            color={'primary'}
-                            onClick={onClickActiveFilter}>Active
-                    </Button>
-                    <Button size={'small'}
-                            style={{marginLeft: 3}}
-                            variant={filter === 'completed' ? 'contained' : 'text'}
-                            color={'primary'}
-                            onClick={onClickCompletedFilter}>Completed
-                    </Button>
+                    <ButtonGroup>
+                        <Button size={'small'}
+                                variant={filter === 'all' ? 'contained' : 'text'}
+                                color={'primary'}
+                                onClick={onClickAllFilter}>All</Button>
+                        <Button size={'small'}
+                                style={{marginLeft: 3}}
+                                variant={filter === 'active' ? 'contained' : 'text'}
+                                color={'primary'}
+                                onClick={onClickActiveFilter}>Active
+                        </Button>
+                        <Button size={'small'}
+                                style={{marginLeft: 3}}
+                                variant={filter === 'completed' ? 'contained' : 'text'}
+                                color={'primary'}
+                                onClick={onClickCompletedFilter}>Completed
+                        </Button>
+                    </ButtonGroup>
+
                 </div>
             </div>
         </div>
