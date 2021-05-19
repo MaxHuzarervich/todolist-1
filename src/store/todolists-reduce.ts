@@ -11,19 +11,19 @@ type AddTodoListAT = {
     title: string
 }
 
-type ChangeTodolistTitleAT = {
+type ChangeTodoListTitleAT = {
     type: 'CHANGE-TODOLIST-TITLE',
     title: string,
     todoListID: string
 }
 
-type ChangeTodoListFilter = {
+type ChangeTodoListFilterAT = {
     type: 'CHANGE-TODOLIST-FILTER',
     filter: FilterValuesType,
     todoListID: string
 }
 
-export type ActionUnionType = RemoveTodoListAT | AddTodoListAT | ChangeTodolistTitleAT | ChangeTodoListFilter
+export type ActionUnionType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | ChangeTodoListFilterAT
 
 
 
@@ -47,4 +47,13 @@ export const todoListsReducer =
 
 export const RemoveTodoListsAC = (todoListID:string): RemoveTodoListAT => {
     return {type: "REMOVE-TODOLIST", todoListID:todoListID}
+}
+export const AddTodoListAC = (title:string): AddTodoListAT => {
+    return {type: 'ADD-TODOLIST',title: title}
+}
+export const ChangeTodoListTitleAC = (title: string, todoListID: string): ChangeTodoListTitleAT => {
+   return{type: 'CHANGE-TODOLIST-TITLE', title: title, todoListID: todoListID}
+}
+export const ChangeTodoListFilterAC = (filter: FilterValuesType, todoListID: string): ChangeTodoListFilterAT => {
+    return{type: 'CHANGE-TODOLIST-FILTER', filter: filter , todoListID: todoListID}
 }
