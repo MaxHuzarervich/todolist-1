@@ -11,8 +11,8 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     filter: FilterValuesType
     addTask: (title: string, todoListID: string) => void
-    removeTask: (taskID: string, todoListID: string) => void    //отсутствие объявленного return
-    changeFilter: (value: FilterValuesType, todoListID: string) => void  //отсутствие объявленного return
+    removeTask: (taskID: string, todoListID: string) => void
+    changeFilter: (value: FilterValuesType, todoListID: string) => void
     changeTaskStatus: (taskId: string, newIsDoneValue: boolean, todoListID: string) => void
     removeTodolist: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
@@ -38,13 +38,9 @@ function TodoList(props: TodoListPropsType) {
                 checked={t.isDone}
                 onChange={(e) => {
                     props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)
+
                 }}/>
 
-                {/*<input onChange={(e) => {*/}
-                {/*    props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)*/}
-                {/*}}*/}
-                {/*       type="checkbox"*/}
-                {/*       checked={t.isDone}/>*/}
             <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
             </span>
 
