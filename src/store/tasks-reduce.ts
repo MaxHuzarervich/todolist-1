@@ -33,9 +33,13 @@ export type ActionUnionType =
     RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType |
     AddTodoListAT | RemoveTodoListAT
 
+const initialState: TaskStateType = {}
+//const initialState ={}
+//initialStateType = typeOf
+
 
 export const tasksReducer =
-    (state: TaskStateType, action: ActionUnionType): TaskStateType => {
+    (state = initialState, action: ActionUnionType): TaskStateType => {
         switch (action.type) {
             case 'REMOVE-TASK':
                 let todoListTasks = state[action.todoListId];

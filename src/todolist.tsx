@@ -21,6 +21,12 @@ type TodoListPropsType = {
 
 function TodoList(props: TodoListPropsType) {
 
+    // const todo = useSelector<AppRootStateType, TodolistType>
+    // (state => state.todolists.filter(t => t.id === props.id)[0])
+    // const tasksSel = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks(props.id))
+    //
+    // const dispatch = useDispatch()
+
     const {filter} = props
 
     const tasksJSXElements = props.tasks.map(t => {
@@ -34,12 +40,12 @@ function TodoList(props: TodoListPropsType) {
         return <li className={taskClasses} key={t.id}>
             <span className={taskClasses}>
                 <Checkbox
-                color={'primary'}
-                checked={t.isDone}
-                onChange={(e) => {
-                    props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)
+                    color={'primary'}
+                    checked={t.isDone}
+                    onChange={(e) => {
+                        props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)
 
-                }}/>
+                    }}/>
 
             <EditableSpan title={t.title} changeTitle={changeTaskTitle}/>
             </span>
