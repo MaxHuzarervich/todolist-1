@@ -21,12 +21,6 @@ type TodoListPropsType = {
 
 function TodoList(props: TodoListPropsType) {
 
-    // const todo = useSelector<AppRootStateType, TodolistType>
-    // (state => state.todolists.filter(t => t.id === props.id)[0])
-    // const tasksSel = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks(props.id))
-    //
-    // const dispatch = useDispatch()
-
     const {filter} = props
 
     const tasksJSXElements = props.tasks.map(t => {
