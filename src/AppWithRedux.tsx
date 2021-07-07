@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import TodoList from './todolist';
 import AddItemForm from "./AddItemForm";
@@ -37,7 +37,7 @@ function AppWithRedux() {
 
     const todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
 
-    const tasks = useSelector<AppRootStateType,TaskStateType>(state => state.tasks)
+    const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
 
@@ -64,34 +64,34 @@ function AppWithRedux() {
     // })
 
     function removeTask(taskID: string, todoListID: string) {
-        let action = removeTaskAC(taskID,todoListID)
+        let action = removeTaskAC(taskID, todoListID)
         dispatch(action)
     }
 
     function addTask(title: string, todoListID: string) {
-        let action = addTaskAC(title,todoListID)
+        let action = addTaskAC(title, todoListID)
         dispatch(action)
     }
 
     function changeTaskStatus(taskID: string, newIsDoneValue: boolean, todoListID: string) {
-       let action = ChangeTaskStatusAC(taskID,newIsDoneValue,todoListID)
+        let action = ChangeTaskStatusAC(taskID, newIsDoneValue, todoListID)
         dispatch(action)
     }
 
     function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
-        let action = ChangeTaskTitleAC(taskID,newTitle,todoListID)
+        let action = ChangeTaskTitleAC(taskID, newTitle, todoListID)
         dispatch(action)
     }
 
     //todolist:
 
     function changeFilter(value: FilterValuesType, todoListID: string) {
-       let action = ChangeTodoListFilterAC(value,todoListID)
+        let action = ChangeTodoListFilterAC(value, todoListID)
         dispatch(action)
     }
 
     function changeTodolistTitle(title: string, todoListID: string) {
-        let action = ChangeTodoListTitleAC(title,todoListID)
+        let action = ChangeTodoListTitleAC(title, todoListID)
         dispatch(action)
     }
 
@@ -100,10 +100,10 @@ function AppWithRedux() {
         dispatch(action)
     }
 
-    function addTodolist(title: string) {
+    const addTodolist = useCallback((title: string) => {
         let action = AddTodoListAC(title)
         dispatch(action)
-    }
+    },[])
 
     function getTasksForTodolist(todoList: TodolistType) {
 
@@ -122,7 +122,7 @@ function AppWithRedux() {
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={10}
-                           style={{padding: '15px', borderRadius: '10px',border:'1px solid lightblue'}}>
+                           style={{padding: '15px', borderRadius: '10px', border: '1px solid lightblue'}}>
                         <TodoList
                             key={tl.id}                   //id for react мы его не используем
                             todoListID={tl.id}
