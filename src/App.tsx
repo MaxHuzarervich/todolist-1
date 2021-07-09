@@ -95,29 +95,39 @@ function App() {
         setTasks({...tasks, [newTodolistID]: []})
     }
 
-    function getTasksForTodolist(todoList: TodolistType) {
-
-        switch (todoList.filter) {
-            case "active":
-                return tasks[todoList.id].filter(t => !t.isDone)
-            case "completed":
-                return tasks[todoList.id].filter(t => t.isDone)
-            default:
-                return tasks[todoList.id]
-        }
-    }
+    // function getTasksForTodolist(todoList: TodolistType) {
+    //
+    //     switch (todoList.filter) {
+    //         case "active":
+    //             return tasks[todoList.id].filter(t => !t.isDone)
+    //         case "completed":
+    //             return tasks[todoList.id].filter(t => t.isDone)
+    //         default:
+    //             return tasks[todoList.id]
+    //     }
+    // }
 
     const todoListsComponents = todoLists.map(tl => {
+
+        let allTodolistTasks = tasks[tl.id];
+        let tasksForTodolist = allTodolistTasks;
+
+        if (tl.filter === "active") {
+            tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+        }
+        if (tl.filter === "completed") {
+            tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+        }
 
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={10}
-                           style={{padding: '15px', borderRadius: '10px',border:'1px solid lightblue'}}>
+                           style={{padding: '15px', borderRadius: '10px', border: '1px solid lightblue'}}>
                         <TodoList
                             key={tl.id}                   //id for react мы его не используем
                             todoListID={tl.id}
                             title={tl.title}
-                            tasks={getTasksForTodolist(tl)}
+                            tasks={tasksForTodolist}
                             filter={tl.filter}
                             addTask={addTask}
                             removeTask={removeTask}

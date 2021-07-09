@@ -63,9 +63,7 @@ export const tasksReducer =
                     ...state, [action.todoListID]: state[action.todoListID].map(task => {
                         if (task.id === action.taskID) {
                             return {...task, isDone: action.newIsDoneValue}
-                        } else {
-                            return task
-                        }
+                        } else return task
                     })
                 }
             case 'CHANGE-TASK-TITLE':
@@ -73,9 +71,8 @@ export const tasksReducer =
                     ...state, [action.todoListID]: state[action.todoListID].map(task => {
                         if (task.id === action.taskID) {
                             return {...task, title: action.newTitle}
-                        } else {
-                            return task
-                        }
+                        } else return task
+
                     })
                 }
             case 'ADD-TODOLIST':
