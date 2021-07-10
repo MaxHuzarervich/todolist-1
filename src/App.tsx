@@ -95,29 +95,18 @@ function App() {
         setTasks({...tasks, [newTodolistID]: []})
     }
 
-    // function getTasksForTodolist(todoList: TodolistType) {
-    //
-    //     switch (todoList.filter) {
-    //         case "active":
-    //             return tasks[todoList.id].filter(t => !t.isDone)
-    //         case "completed":
-    //             return tasks[todoList.id].filter(t => t.isDone)
-    //         default:
-    //             return tasks[todoList.id]
-    //     }
-    // }
 
     const todoListsComponents = todoLists.map(tl => {
 
-        let allTodolistTasks = tasks[tl.id];
-        let tasksForTodolist = allTodolistTasks;
+            let allTodolistTasks = tasks[tl.id];
+            let tasksForTodolist = allTodolistTasks;
 
-        if (tl.filter === "active") {
-            tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
-        }
-        if (tl.filter === "completed") {
-            tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
-        }
+            if (tl.filter === "active") {
+                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === false);
+            }
+            if (tl.filter === "completed") {
+                tasksForTodolist = allTodolistTasks.filter(t => t.isDone === true);
+            }
 
             return (
                 <Grid item key={tl.id}>
