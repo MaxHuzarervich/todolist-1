@@ -9,8 +9,8 @@ import {
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
     RemoveTodoListsAC
-} from "./store/todolists-reduce";
-import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reduce";
+} from "./store/todolists-reducer";
+import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
 

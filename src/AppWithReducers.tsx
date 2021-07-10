@@ -11,8 +11,8 @@ import {
     ChangeTodoListTitleAC,
     RemoveTodoListsAC,
     todoListsReducer
-} from "./store/todolists-reduce";
-import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reduce";
+} from "./store/todolists-reducer";
+import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
 
 
 export type TaskType = {
