@@ -16,7 +16,7 @@ const initialGlobalState = {
     todolists: [
         {id: "todolistId1", title: "What to learn", filter: "all"},
         {id: "todolistId2", title: "What to buy", filter: "all"}
-    ] ,
+    ],
     tasks: {
         ["todolistId1"]: [
             {id: v1(), title: "HTML&CSS", isDone: true},
@@ -33,5 +33,5 @@ export const storyBookStore = createStore(rootReducer, initialGlobalState as App
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
 
-    return <Provider store={store}>{storyFn()}<AppWithRedux/></Provider>
+    return <Provider store={store}>{storyFn()}</Provider>
 }
