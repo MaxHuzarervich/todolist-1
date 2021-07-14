@@ -1,4 +1,4 @@
-import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {TextField} from "@material-ui/core";
 
 type EditableSpanPropsType = {

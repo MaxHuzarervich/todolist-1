@@ -32,7 +32,7 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
 }
 
-function AppWithRedux() {
+export function AppWithRedux() {
 //BLL:
 
     const todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
@@ -139,4 +139,4 @@ function AppWithRedux() {
     );
 }
 
-export default AppWithRedux;
+
