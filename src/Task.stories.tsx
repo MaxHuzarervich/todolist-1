@@ -15,8 +15,8 @@ export default {
 
 const Template: ComponentStory<typeof Task> = (args) => <Task {...args} />;
 
-export const TaskIsDoneStories = Template.bind({});
-TaskIsDoneStories.args = {
+export const TaskIsDoneStories = Template.bind({}); //история создана и к ней
+TaskIsDoneStories.args = {                                 //подключены аргументы
   todoListID: '1',
   task: {id: '11', isDone:true, title:'JS'}
 }
