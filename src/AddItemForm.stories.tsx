@@ -7,8 +7,10 @@ export default {
   title: 'TODOLISTS/AddItemForm',
   component: AddItemForm,
   argTypes: {
-
-  },
+    addItem:{
+      description: 'Button clicked'
+    }
+  }
 } as ComponentMeta<typeof AddItemForm>;
 
 const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
