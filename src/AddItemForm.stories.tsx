@@ -12,7 +12,7 @@ export default {
     }
   }
 } as ComponentMeta<typeof AddItemForm>;
-
+      //шаблон
 const Template: ComponentStory<typeof AddItemForm> = (args) => <AddItemForm {...args} />;
 
 export const AddItemFormStories = Template.bind({});
