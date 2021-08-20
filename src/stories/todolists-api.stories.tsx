@@ -33,7 +33,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const title = 'TODO!'
+        const title = 'I LOVE LIFE!'
         todolistApi.createTodo(title).then((res) => {
             setState(res.data)
         })
@@ -58,11 +58,11 @@ export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
-        const todolisId = 'd41c6c4f-64f0-454f-9afc-622d9918ee63'
-        const title = 'TODO!!!'
-            todolistApi.updateTodoTitle(todolisId,title).then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
-                setState(res.data.data)
-            })
+        const todolisId = '00671240-4a58-4978-9e26-12bccdc0aa6b'
+        const title = 'I CHANGED!'
+        todolistApi.updateTodoTitle(todolisId, title).then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
+            setState(res.data.data)
+        })
 
     }, [])
 
