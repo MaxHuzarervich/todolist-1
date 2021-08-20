@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//axios создай на своей основе конкретный экземпляр
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1',
     withCredentials: true,
@@ -16,10 +17,28 @@ type CommonResponseType<T = {}> = {
 }
 
 type TodoType = {
-    id: string,
+     id: string,
     addedDate: string,
     order: number,
     title: string
+}
+type TaskType ={
+    description: string,
+    title: string,
+    completed: boolean,
+    status: number,
+    priority: number,
+    startDate: string,
+    deadline: string,
+    id: string,
+    todoListId: string,
+    order: number,
+    addedDate: string
+}
+type GetTaskResponse = {
+    error: string,
+    totalCount: number,
+    items: TaskType[]
 }
 
 //объект, который будет заниматься запросами на сервер!
@@ -36,5 +55,8 @@ export const todolistApi = {
     },
     updateTodoTitle(todolistId: string, title: string) {
         return instance.put<CommonResponseType>(`/todo-lists/${todolistId}`, {title})
+    },
+    getTasks(todolistId: string) {
+        return instance.get<GetTaskResponse>(`/todo-lists/${todolistId}/tasks`)
     }
 }

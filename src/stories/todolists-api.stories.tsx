@@ -1,16 +1,8 @@
 import React, {useEffect, useState} from 'react'
-import axios from "axios";
 import {todolistApi} from "../api/todolist-api";
 
 export default {
     title: 'API'
-}
-
-export const settings = {
-    withCredentials: true,
-    headers: {
-        'API-KEY': 'aa1f6061-8f98-4319-8eee-239786445cdc'
-    }
 }
 
 
@@ -45,8 +37,8 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        const todolistId = 'aa1f6061-8f98-4319-8eee-239786445cdc'
-        todolistApi.deleteTodo(todolistId).then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
+        const todolistId = '00671240-4a58-4978-9e26-12bccdc0aa6b'
+        todolistApi.deleteTodo(todolistId).then((res) => {
             setState(res.data)
         })
     }, [])
@@ -58,13 +50,25 @@ export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
 
-        const todolisId = '00671240-4a58-4978-9e26-12bccdc0aa6b'
-        const title = 'I CHANGED!'
-        todolistApi.updateTodoTitle(todolisId, title).then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
+        const todolistId = '00671240-4a58-4978-9e26-12bccdc0aa6b'
+        const title = 'I CHANGE!'
+        todolistApi.updateTodoTitle(todolistId, title).then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
             setState(res.data.data)
         })
 
     }, [])
 
     return <div> {JSON.stringify(state)}</div>
+}
+//----------------------------------------------------------------------------------------------------------------------
+export const GetTasks = () => {
+    const [state, setState] = useState<any>(null)
+    useEffect(() => {
+
+        const todolistId = 'f63b9c0c-1c11-4bff-9eff-70a163a1982f'
+        todolistApi.getTasks(todolistId).then((res) => {
+            setState(res.data)
+        })
+    },[])
+    return <div> {JSON.stringify(state)} </div>
 }
