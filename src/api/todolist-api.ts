@@ -45,15 +45,6 @@ type DeleteTask = {
     messages: Array<string>
     data: {}
 }
-type UpdateTaskResponse = {
-    title: string,
-    description: string,
-    completed: boolean,
-    status: number,
-    priority: number,
-    startDate: string,
-    deadline: string
-}
 type CreateUpdateTaskResponse<T = {}> = {
     resultCode: number,
     messages:Array<string>,
