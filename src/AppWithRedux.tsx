@@ -8,25 +8,13 @@ import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
+    FilterValuesType,
     RemoveTodoListsAC
 } from "./store/todolists-reducer";
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-
-
-export type TaskType = {
-    id: string                          //меняем на string
-    title: string
-    isDone: boolean
-}
-export type FilterValuesType = 'all' | 'active' | 'completed'  // типизируем переменную filter
-
-export type TodolistType = {
-    id: string,
-    title: string,
-    filter: FilterValuesType
-}
+import {TaskStatuses, TaskType, TodolistType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -51,8 +39,8 @@ export function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((taskID: string, newIsDoneValue: boolean, todoListID: string) => {
-        let action = ChangeTaskStatusAC(taskID, newIsDoneValue, todoListID)
+    const changeTaskStatus = useCallback((taskID: string, status:TaskStatuses, todoListID: string) => {
+        let action = ChangeTaskStatusAC(taskID, status, todoListID)
         dispatch(action)
     }, [dispatch])
 

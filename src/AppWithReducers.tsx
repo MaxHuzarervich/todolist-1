@@ -8,25 +8,12 @@ import {Menu} from "@material-ui/icons";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
+    ChangeTodoListTitleAC, FilterValuesType,
     RemoveTodoListsAC,
     todoListsReducer
 } from "./store/todolists-reducer";
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
-
-
-export type TaskType = {
-    id: string                          //меняем на string
-    title: string
-    isDone: boolean
-}
-export type FilterValuesType = 'all' | 'active' | 'completed'  // типизируем переменную filter
-
-export type TodolistType = {
-    id: string,
-    title: string,
-    filter: FilterValuesType
-}
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -38,54 +25,78 @@ function AppWithReducer() {
     const todoListID_1 = v1()
     const todoListID_2 = v1()
 
-    const [todoLists, dispatchToTodoLists] = useReducer(todoListsReducer,[
-        {id: todoListID_1, title: 'What to learn', filter: 'all'},
-        {id: todoListID_2, title: 'What to buy', filter: 'all'},
+    const [todoLists, dispatchToTodoLists] = useReducer(todoListsReducer, [
+        {id: todoListID_1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
+        {id: todoListID_2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
     ])
 
-    const [tasks, dispatchToTasks] = useReducer(tasksReducer,{
+    const [tasks, dispatchToTasks] = useReducer(tasksReducer, {
         [todoListID_1]: [
-            {id: v1(), title: 'HTML', isDone: true}, //true                  //импортируем v1() alt+enter
-            {id: v1(), title: 'CSS', isDone: false},  //true
-            {id: v1(), title: 'React', isDone: true},
+            {
+                id: v1(), title: 'HTML', status: TaskStatuses.Completed,
+                todoListId: todoListID_1, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: 'CSS', status: TaskStatuses.Completed,
+                todoListId: todoListID_1, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: 'React', status: TaskStatuses.Completed,
+                todoListId: todoListID_1, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
         ],
         [todoListID_2]: [
-            {id: v1(), title: 'Milk', isDone: true}, //true                  //импортируем v1() alt+enter
-            {id: v1(), title: 'Meat', isDone: true},  //true
-            {id: v1(), title: 'Bread', isDone: true},
+            {
+                id: v1(), title: 'Milk', status: TaskStatuses.Completed,
+                todoListId: todoListID_2, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: 'Meat', status: TaskStatuses.Completed,
+                todoListId: todoListID_2, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
+            {
+                id: v1(), title: 'Bread', status: TaskStatuses.Completed,
+                todoListId: todoListID_2, startDate: '', deadline: '', addedDate: '',
+                order: 0, priority: TaskPriorities.Low, description: ''
+            },
         ]
 
     })
 
     function removeTask(taskID: string, todoListID: string) {
-        let action = removeTaskAC(taskID,todoListID)
+        let action = removeTaskAC(taskID, todoListID)
         dispatchToTasks(action)
     }
 
     function addTask(title: string, todoListID: string) {
-        let action = addTaskAC(title,todoListID)
+        let action = addTaskAC(title, todoListID)
         dispatchToTasks(action)
     }
 
-    function changeTaskStatus(taskID: string, newIsDoneValue: boolean, todoListID: string) {
-       let action = ChangeTaskStatusAC(taskID,newIsDoneValue,todoListID)
+    function changeTaskStatus(taskID: string, status: TaskStatuses, todoListID: string) {
+        let action = ChangeTaskStatusAC(taskID, status, todoListID)
         dispatchToTasks(action)
     }
 
     function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
-        let action = ChangeTaskTitleAC(taskID,newTitle,todoListID)
+        let action = ChangeTaskTitleAC(taskID, newTitle, todoListID)
         dispatchToTasks(action)
     }
 
     //todolist:
 
     function changeFilter(value: FilterValuesType, todoListID: string) {
-       let action = ChangeTodoListFilterAC(value,todoListID)
+        let action = ChangeTodoListFilterAC(value, todoListID)
         dispatchToTodoLists(action)
     }
 
     function changeTodolistTitle(title: string, todoListID: string) {
-        let action = ChangeTodoListTitleAC(title,todoListID)
+        let action = ChangeTodoListTitleAC(title, todoListID)
         dispatchToTodoLists(action)
     }
 
@@ -103,11 +114,11 @@ function AppWithReducer() {
 
     function getTasksForTodolist(todoList: TodolistType) {
 
-        switch (todoList.filter) {
+        switch (todoList.id) {
             case "active":
-                return tasks[todoList.id].filter(t => !t.isDone)
+                return tasks[todoList.id].filter(t => !t.status)
             case "completed":
-                return tasks[todoList.id].filter(t => t.isDone)
+                return tasks[todoList.id].filter(t => t.status)
             default:
                 return tasks[todoList.id]
         }
@@ -118,7 +129,7 @@ function AppWithReducer() {
             return (
                 <Grid item key={tl.id}>
                     <Paper elevation={10}
-                           style={{padding: '15px', borderRadius: '10px',border:'1px solid lightblue'}}>
+                           style={{padding: '15px', borderRadius: '10px', border: '1px solid lightblue'}}>
                         <TodoList
                             key={tl.id}                   //id for react мы его не используем
                             todoListID={tl.id}
