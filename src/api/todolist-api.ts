@@ -18,25 +18,28 @@ type CommonResponseType<T = {}> = {
 }
 
 export type TodolistType = {
-     id: string,
+    id: string,
     addedDate: string,
     order: number,
     title: string
 }
-export enum TaskStatuses{
+
+export enum TaskStatuses {
     New,
     InProgress,
     Completed,
     Draft
 }
-export enum TaskPriorities{
+
+export enum TaskPriorities {
     Low,
     Middle,
     Hi,
     Urgently,
     Later
 }
-export type TaskType ={
+
+export type TaskType = {
     description: string,
     title: string,
     // completed: boolean,
@@ -60,7 +63,7 @@ type DeleteTask = {
 }
 type CreateUpdateTaskResponse<T = {}> = {
     resultCode: number,
-    messages:Array<string>,
+    messages: Array<string>,
     data: T
 }
 
@@ -81,13 +84,13 @@ export const todolistApi = {
     getTasks(todolistId: string) {
         return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
     },
-    deleteTask(todolistId: string, taskId: string){
+    deleteTask(todolistId: string, taskId: string) {
         return instance.delete<DeleteTask>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<CreateUpdateTaskResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`,{title})
+        return instance.post<CreateUpdateTaskResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
     },
-    updateTaskTitle(todolistId: string, taskId: string, title: string){
-        return instance.put<CreateUpdateTaskResponse<{item: TaskType}>>(`todo-lists/${todolistId}/tasks/${taskId}`,{title})
+    updateTaskTitle(todolistId: string, taskId: string, title: string) {
+        return instance.put<CreateUpdateTaskResponse<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
     }
 }

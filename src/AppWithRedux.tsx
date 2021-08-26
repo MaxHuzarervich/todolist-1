@@ -9,12 +9,13 @@ import {
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
     FilterValuesType,
-    RemoveTodoListsAC
+    RemoveTodoListsAC,
+    TodolistDomainType
 } from "./store/todolists-reducer";
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType, TodolistType} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -23,7 +24,7 @@ export type TaskStateType = {
 export function AppWithRedux() {
 //BLL:
 
-    const todoLists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
+    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
