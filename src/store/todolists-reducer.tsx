@@ -1,5 +1,7 @@
 import {v1} from "uuid";
-import {TodolistType} from "../api/todolist-api";
+import {todolistApi, TodolistType} from "../api/todolist-api";
+import {Dispatch} from "redux";
+import {AppRootStateType} from "./store";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST'
@@ -24,7 +26,12 @@ type ChangeTodoListFilterAT = {
     todoListID: string
 }
 
-export type ActionUnionType = RemoveTodoListAT | AddTodoListAT | ChangeTodoListTitleAT | ChangeTodoListFilterAT
+export type ActionUnionType =
+    RemoveTodoListAT
+    | AddTodoListAT
+    | ChangeTodoListTitleAT
+    | ChangeTodoListFilterAT
+    | SetTodoListsActionType
 
 const initialState: TodolistDomainType[] = []
 
@@ -51,6 +58,10 @@ export const todoListsReducer =
                 return state.map(tl => tl.id === action.todoListID ? {...tl, title: action.title} : tl)
             case 'CHANGE-TODOLIST-FILTER':
                 return state.map(tl => tl.id === action.todoListID ? {...tl, filter: action.filter} : tl)
+            case 'SET-TODOLISTS':
+                return action.todos.map((tl) => {
+                    return {...tl, filter: 'all'}
+                })
             default:
                 return state
         }
@@ -67,4 +78,23 @@ export const ChangeTodoListTitleAC = (title: string, todoListID: string): Change
 }
 export const ChangeTodoListFilterAC = (filter: FilterValuesType, todoListID: string): ChangeTodoListFilterAT => {
     return {type: 'CHANGE-TODOLIST-FILTER', filter, todoListID: todoListID}
+}
+export const setTodolistsAC = (todos: Array<TodolistType>) => {
+    return {
+        type: 'SET-TODOLISTS',
+        todos
+    } as const
+}
+export type SetTodoListsActionType = ReturnType<typeof setTodolistsAC>
+
+//THUNK
+
+export const fetchTodoListsThunk = (dispatch: Dispatch, getState: () => AppRootStateType): void => {
+    //1.side effect
+    todolistApi.getTodolists()
+        .then((res) => {
+            let todos = res.data;
+            //2.dispatch action
+            dispatch(setTodolistsAC(todos))
+        })
 }

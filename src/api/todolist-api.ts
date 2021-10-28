@@ -5,24 +5,24 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     withCredentials: true,
     headers: {
-        'API-KEY': 'b79e1a2a-851b-41b6-b0f0-5dddb90cc8ec'
+        'API-KEY': '09fdfea4-0315-4da1-8525-2baf0617aa13'
     }
 })
 
-//если Т не передавать то это пустой объект
-type CommonResponseType<T = {}> = {
+//если D не передавать то это пустой объект (ДЖЕНЕРИК тип)
+type CommonResponseType<D = {}> = {
     fieldsErrors: Array<string>,
     messages: Array<string>,
     resultCode: number,
-    data: T
+    data: D
 }
-
 export type TodolistType = {
     id: string,
     addedDate: string,
     order: number,
     title: string
 }
+
 
 export enum TaskStatuses {
     New,
@@ -42,7 +42,7 @@ export enum TaskPriorities {
 export type TaskType = {
     description: string,
     title: string,
-    // completed: boolean,
+    completed: boolean,
     status: TaskStatuses,
     priority: TaskPriorities,
     startDate: string,
@@ -55,6 +55,7 @@ export type TaskType = {
 type GetTaskResponse = {
     error: string,
     totalCount: number,
+    items: TaskType[]
 }
 type DeleteTask = {
     resultCode: number,
@@ -72,7 +73,7 @@ export const todolistApi = {
     getTodolists() {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
-    createTodo(title: string) {
+    createTodo(title: string) {                 // уточняем D - TodolistType
         return instance.post<CommonResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
     deleteTodo(todolistId: string) {
