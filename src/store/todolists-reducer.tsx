@@ -26,6 +26,11 @@ type ChangeTodoListFilterAT = {
     todoListID: string
 }
 
+export type SetTodoListsAT = {             //для получения тудулистов
+    type: 'SET-TODOLISTS',
+    todoLists: Array<TodolistType>
+}
+
 export type ActionUnionType =
     RemoveTodoListAT
     | AddTodoListAT
