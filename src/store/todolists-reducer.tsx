@@ -98,10 +98,10 @@ export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT =
 
 export const fetchTodoListsThunk = (dispatch: Dispatch, getState: () => AppRootStateType): void => {
     //1.side effect
-    todolistApi.getTodolists()
+    todolistApi.getTodolists()              //делаем запрос
         .then((res) => {
             let todoLists = res.data;
             //2.dispatch action
-            dispatch(setTodoListsAC(todoLists))
+            dispatch(setTodoListsAC(todoLists))  //затем диспатчим
         })
 }
