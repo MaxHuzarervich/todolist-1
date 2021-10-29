@@ -100,9 +100,8 @@ export const fetchTodoListsTC = () => {
         //1.side effect
         todolistApi.getTodolists()              //делаем запрос
             .then((res) => {
-                let todoLists = res.data;
                 //2.dispatch action
-                dispatch(setTodoListsAC(todoLists))  //затем диспатчим
+                dispatch(setTodoListsAC(res.data))  //затем диспатчим
             })
 
     }

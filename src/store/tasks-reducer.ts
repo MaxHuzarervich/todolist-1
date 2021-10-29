@@ -1,7 +1,8 @@
 import {TaskStateType} from "../App";
 import {v1} from "uuid";
-import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
+import {AddTodoListAT, RemoveTodoListAT, setTodoListsAC, SetTodoListsAT} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType, todolistApi} from "../api/todolist-api";
+import {Dispatch} from "redux";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -131,12 +132,18 @@ export const SetTasksAC = (tasks: Array<TaskType>, todoListID: string): SetTasks
     return {type: 'SET-TASKS', tasks, todoListID}
 }
 
-//THUNK
+//THUNK - ф-ция которая делает асинхронную операцию и по итогу диспатчит экшн
 
-// export const fetchTasksThunk = (dispatch: Dispatch) => {
-//
-//     todolistApi.getTasks().then((res) => {
-//         let tasks = res.data.items
-//     })
-//
-// }
+//thunkCreator
+
+export const fetchTasksTC = (todoListID: string) => {
+    return (dispatch: Dispatch): void => {
+        todolistApi.getTasks(todoListID)              //делаем запрос
+            .then((res) => {
+                const tasks = res.data.items
+                const action = SetTasksAC(tasks,todoListID)
+                dispatch(action)
+            })
+
+    }
+}  //замыкание - здесь наша санка использует параметры из санккреатора
