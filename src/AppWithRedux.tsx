@@ -8,14 +8,15 @@ import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
+    fetchTodoListsTC,
     FilterValuesType,
-    RemoveTodoListsAC, setTodoListsAC,
+    RemoveTodoListsAC,
     TodolistDomainType
 } from "./store/todolists-reducer";
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType, todolistApi} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -35,11 +36,7 @@ export function AppWithRedux() {
 
     useEffect(() => {
 
-        todolistApi.getTodolists()
-            .then(res => {
-                const action = setTodoListsAC(res.data)
-                dispatch(action);
-            })
+        dispatch(fetchTodoListsTC())  //получение тудулистов
 
     }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 

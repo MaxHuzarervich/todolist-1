@@ -18,7 +18,7 @@ export type AddTaskActionType = {
 export type ChangeTaskStatusActionType = {
     type: 'CHANGE-TASK-STATUS'
     taskID: string
-    status:TaskStatuses
+    status: TaskStatuses
     todoListID: string
 }
 
@@ -29,10 +29,15 @@ export type ChangeTaskTitleActionType = {
     todoListID: string
 }
 
+export type SetTasksActionType = {
+    type: 'SET-TASKS',
+    tasks: Array<TaskType>,
+    todoListID: string
+}
 
 export type ActionUnionType =
     RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType |
-    AddTodoListAT | RemoveTodoListAT | SetTodoListsAT
+    AddTodoListAT | RemoveTodoListAT | SetTodoListsAT | SetTasksActionType
 
 const initialState: TaskStateType = {}
 
@@ -90,15 +95,20 @@ export const tasksReducer =
                 let newState = {...state}
                 delete newState[action.todoListID]
                 return newState
-            default:
-                return state
-            case "SET-TODOLISTS":
+            case 'SET-TODOLISTS':
                 const copyState = {...state};
                 action.todoLists.forEach(tl => {
                     copyState[tl.id] = [];         // задаем новое св-во id
                 })
-
                 return copyState;
+            case 'SET-TASKS': {
+                const copyState = {...state}
+                copyState[action.todoListID] = action.tasks       //нужно обратится к нужному св-ву по todolistid который из action приходит
+                return copyState;
+            }                                                    //чтобы обратится к нужному массиву для нужного тудулиста
+                                                                 // и просто переопределить массив его тасок
+            default:
+                return state
         }
     }
 
@@ -109,13 +119,16 @@ export const removeTaskAC = (taskId: string, todoListId: string): RemoveTaskActi
 export const addTaskAC = (title: string, todoListID: string): AddTaskActionType => {
     return {type: 'ADD-TASK', title: title, todoListID: todoListID}
 }
-export const ChangeTaskStatusAC = (taskID: string, status:TaskStatuses, todoListID: string):
+export const ChangeTaskStatusAC = (taskID: string, status: TaskStatuses, todoListID: string):
     ChangeTaskStatusActionType => {
-    return {type: 'CHANGE-TASK-STATUS', taskID: taskID, status , todoListID: todoListID}
+    return {type: 'CHANGE-TASK-STATUS', taskID: taskID, status, todoListID: todoListID}
 }
 export const ChangeTaskTitleAC = (taskID: string, newTitle: string, todoListID: string):
     ChangeTaskTitleActionType => {
     return {type: 'CHANGE-TASK-TITLE', taskID: taskID, newTitle: newTitle, todoListID: todoListID}
+}
+export const SetTasksAC = (tasks: Array<TaskType>, todoListID: string): SetTasksActionType => {
+    return {type: 'SET-TASKS', tasks, todoListID}
 }
 
 //THUNK

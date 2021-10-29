@@ -92,16 +92,18 @@ export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT =
         type: 'SET-TODOLISTS', todoLists
     } as const
 }
-// export type SetTodoListsActionType = ReturnType<typeof setTodoListsAC>
 
-//THUNK
+//thunkCreator
 
-export const fetchTodoListsThunk = (dispatch: Dispatch, getState: () => AppRootStateType): void => {
-    //1.side effect
-    todolistApi.getTodolists()              //делаем запрос
-        .then((res) => {
-            let todoLists = res.data;
-            //2.dispatch action
-            dispatch(setTodoListsAC(todoLists))  //затем диспатчим
-        })
+export const fetchTodoListsTC = () => {
+    return (dispatch: Dispatch): void => {
+        //1.side effect
+        todolistApi.getTodolists()              //делаем запрос
+            .then((res) => {
+                let todoLists = res.data;
+                //2.dispatch action
+                dispatch(setTodoListsAC(todoLists))  //затем диспатчим
+            })
+
+    }
 }

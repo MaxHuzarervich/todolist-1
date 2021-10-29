@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import TodoList from './todolist';
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {fetchTodoListsThunk, FilterValuesType, TodolistDomainType} from "./store/todolists-reducer";
+import {FilterValuesType, TodolistDomainType} from "./store/todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
-import {useDispatch} from "react-redux";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -15,12 +14,6 @@ export type TaskStateType = {
 
 function App() {
 //BLL:
-
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchTodoListsThunk)
-    },[])
 
     const todoListID_1 = v1()
     const todoListID_2 = v1()
