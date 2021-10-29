@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import './App.css';
 import TodoList from './todolist';
 import AddItemForm from "./AddItemForm";
@@ -9,13 +9,13 @@ import {
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
     FilterValuesType,
-    RemoveTodoListsAC,
+    RemoveTodoListsAC, setTodoListsAC,
     TodolistDomainType
 } from "./store/todolists-reducer";
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses, TaskType, todolistApi} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -23,12 +23,25 @@ export type TaskStateType = {
 
 export function AppWithRedux() {
 //BLL:
+    //для того чтобы забрать что нужно из redux используем useSelector
+    //для того чтобы задиспатчить что то в redux используем hook useDispatch, который нам возвращает
+    // функцию dispatch в который мы засовываем action который мы хотим как конструкцию отправить в redux
 
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+
+        todolistApi.getTodolists()
+            .then(res => {
+                const action = setTodoListsAC(res.data)
+                dispatch(action);
+            })
+
+    }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 
     const removeTask = useCallback((taskID: string, todoListID: string) => {
         let action = removeTaskAC(taskID, todoListID)
@@ -40,7 +53,7 @@ export function AppWithRedux() {
         dispatch(action)
     }, [dispatch])
 
-    const changeTaskStatus = useCallback((taskID: string, status:TaskStatuses, todoListID: string) => {
+    const changeTaskStatus = useCallback((taskID: string, status: TaskStatuses, todoListID: string) => {
         let action = ChangeTaskStatusAC(taskID, status, todoListID)
         dispatch(action)
     }, [dispatch])
