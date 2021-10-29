@@ -1,6 +1,6 @@
 import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
 import {TaskStateType} from '../App';
-import {AddTodoListAC, RemoveTodoListsAC} from "./todolists-reducer";
+import {AddTodoListAC, RemoveTodoListsAC, setTodoListsAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../api/todolist-api";
 
 let startState: TaskStateType
@@ -143,3 +143,19 @@ test('property with todolistId should be deleted', () => {
     expect(keys.length).toBe(1);
     expect(endState["todolistId2"]).not.toBeDefined();
 });
+
+test('empty arrays should be added when we set todolists', () => {
+    const action = setTodoListsAC([     // мы хотим создать экшн в котром эти два тудулиста будут сетаться в стейт
+        {id:'1',title:'title 1',order: 0, addedDate: ''},
+        {id:'2', title: 'title 2', order: 0, addedDate: ''}
+    ])
+
+    const endState = tasksReducer({},action)
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(2)
+    expect(endState['1']).toStrictEqual([])
+    expect(endState['2']).toStrictEqual([])
+
+})

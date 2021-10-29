@@ -68,7 +68,8 @@ export const todoListsReducer =
                     return {
                         ...tl,
                         filter: 'all'
-                    }})
+                    }
+                })
             default:
                 return state
         }
@@ -87,7 +88,8 @@ export const ChangeTodoListFilterAC = (filter: FilterValuesType, todoListID: str
     return {type: 'CHANGE-TODOLIST-FILTER', filter, todoListID: todoListID}
 }
 export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT => {
-    return {type: 'SET-TODOLISTS', todoLists
+    return {
+        type: 'SET-TODOLISTS', todoLists
     } as const
 }
 // export type SetTodoListsActionType = ReturnType<typeof setTodoListsAC>

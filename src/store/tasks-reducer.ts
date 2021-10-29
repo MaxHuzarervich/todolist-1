@@ -1,8 +1,7 @@
 import {TaskStateType} from "../App";
 import {v1} from "uuid";
-import {AddTodoListAT, RemoveTodoListAT, SetTodoListsActionType} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, todolistApi} from "../api/todolist-api";
-import {Dispatch} from "redux";
+import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -33,25 +32,13 @@ export type ChangeTaskTitleActionType = {
 
 export type ActionUnionType =
     RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType |
-    AddTodoListAT | RemoveTodoListAT | SetTodoListsActionType
+    AddTodoListAT | RemoveTodoListAT | SetTodoListsAT
 
-const initialState: TaskStateType = {
-
-
-
-}
+const initialState: TaskStateType = {}
 
 export const tasksReducer =
     (state = initialState, action: ActionUnionType): TaskStateType => {
         switch (action.type) {
-            case 'SET-TODOLISTS': {
-                let stateCopy = {...state}
-                action.todos.forEach((tl) => {
-                    stateCopy[tl.id] =[]
-                })
-                return stateCopy
-            }
-
             case 'REMOVE-TASK':
                 let todoListTasks = state[action.todoListId];
                 todoListTasks = todoListTasks.filter(task => task.id !== action.taskId);
@@ -105,6 +92,13 @@ export const tasksReducer =
                 return newState
             default:
                 return state
+            case "SET-TODOLISTS":
+                const copyState = {...state};
+                action.todoLists.forEach(tl => {
+                    copyState[tl.id] = [];         // задаем новое св-во id
+                })
+
+                return copyState;
         }
     }
 
