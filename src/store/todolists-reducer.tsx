@@ -36,7 +36,7 @@ export type ActionUnionType =
     | AddTodoListAT
     | ChangeTodoListTitleAT
     | ChangeTodoListFilterAT
-    | SetTodoListsActionType
+    | SetTodoListsAT
 
 const initialState: TodolistDomainType[] = []
 
@@ -63,10 +63,12 @@ export const todoListsReducer =
                 return state.map(tl => tl.id === action.todoListID ? {...tl, title: action.title} : tl)
             case 'CHANGE-TODOLIST-FILTER':
                 return state.map(tl => tl.id === action.todoListID ? {...tl, filter: action.filter} : tl)
-            case 'SET-TODOLISTS':
-                return action.todos.map((tl) => {
-                    return {...tl, filter: 'all'}
-                })
+            case "SET-TODOLISTS":
+                return action.todoLists.map(tl => {
+                    return {
+                        ...tl,
+                        filter: 'all'
+                    }})
             default:
                 return state
         }
@@ -84,13 +86,11 @@ export const ChangeTodoListTitleAC = (title: string, todoListID: string): Change
 export const ChangeTodoListFilterAC = (filter: FilterValuesType, todoListID: string): ChangeTodoListFilterAT => {
     return {type: 'CHANGE-TODOLIST-FILTER', filter, todoListID: todoListID}
 }
-export const setTodolistsAC = (todos: Array<TodolistType>) => {
-    return {
-        type: 'SET-TODOLISTS',
-        todos
+export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT => {
+    return {type: 'SET-TODOLISTS', todoLists
     } as const
 }
-export type SetTodoListsActionType = ReturnType<typeof setTodolistsAC>
+// export type SetTodoListsActionType = ReturnType<typeof setTodoListsAC>
 
 //THUNK
 
@@ -98,8 +98,8 @@ export const fetchTodoListsThunk = (dispatch: Dispatch, getState: () => AppRootS
     //1.side effect
     todolistApi.getTodolists()
         .then((res) => {
-            let todos = res.data;
+            let todoLists = res.data;
             //2.dispatch action
-            dispatch(setTodolistsAC(todos))
+            dispatch(setTodoListsAC(todoLists))
         })
 }
