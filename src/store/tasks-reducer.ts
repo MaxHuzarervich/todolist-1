@@ -141,9 +141,18 @@ export const fetchTasksTC = (todoListID: string) => {
         todolistApi.getTasks(todoListID)
             .then((res) => {
                 const tasks = res.data.items
-                const action = SetTasksAC(tasks,todoListID)
+                const action = SetTasksAC(tasks, todoListID)
                 dispatch(action)
             })
 
     }
-}  //замыкание - здесь наша санка использует параметры из санккреатора
+}  //замыкание - здесь наша санка использует параметры из санккреатора           !!!!!!!
+
+export const removeTaskTC = (taskID:string,todoListID:string) => {
+    return (dispatch: Dispatch): void => {
+        todolistApi.deleteTask(todoListID,taskID)
+            .then((res) => {
+                let action = removeTaskAC(taskID, todoListID)
+                dispatch(action)
+            })
+    }}

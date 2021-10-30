@@ -13,10 +13,10 @@ import {
     RemoveTodoListsAC,
     TodolistDomainType
 } from "./store/todolists-reducer";
-import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC} from "./store/tasks-reducer";
+import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, removeTaskTC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {TaskStatuses, TaskType, todolistApi} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -40,10 +40,10 @@ export function AppWithRedux() {
 
     }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 
-    const removeTask = useCallback((taskID: string, todoListID: string) => {
-        let action = removeTaskAC(taskID, todoListID)
-        dispatch(action)
-    }, [dispatch])
+    const removeTask = useCallback(function (taskID: string, todoListID: string) {
+        const thunk = removeTaskTC(taskID, todoListID) //получаем санку при помощи санкреатора и диспатчим ее
+        dispatch(thunk)
+    }, [])
 
     const addTask = useCallback((title: string, todoListID: string) => {
         let action = addTaskAC(title, todoListID)
