@@ -89,7 +89,19 @@ test('correct task should be deleted from correct array', () => {
 
 test('correct task should be added to correct array', () => {
 
-    const action = addTaskAC("juce", "todolistId2");
+    // const action = addTaskAC("juce", "todolistId2");
+    const action = addTaskAC({
+        todoListId: 'todolistId2',
+        title: 'juce',
+        status: TaskStatuses.New,
+        addedDate: '',
+        deadline: '',
+        description: '',
+        order: 0,
+        priority: 0,
+        startDate: '',
+        id: 'id exists',
+    });
 
     const endState = tasksReducer(startState, action)
 
@@ -152,7 +164,7 @@ test('property with todolistId should be deleted', () => {
 });
 
 test('empty arrays should be added when we set todolists', () => {
-    const action = setTodoListsAC([     // мы хотим создать экшн в котром эти два тудулиста будут сетаться в стейт
+    const action = setTodoListsAC([     // мы хотим создать экшн в котором эти два тудулиста будут сетаться в стейт
         {id:'1',title:'title 1',order: 0, addedDate: ''},
         {id:'2', title: 'title 2', order: 0, addedDate: ''}
     ])
