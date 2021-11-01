@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react';
 import './App.css';
-import TodoList from './todolist';
+import TodoList from '../todolist';
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
@@ -12,9 +12,9 @@ import {
     FilterValuesType,
     RemoveTodoListsAC,
     todoListsReducer
-} from "./store/todolists-reducer";
-import {addTaskAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer, updateTaskAC} from "./store/tasks-reducer";
-import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "./api/todolist-api";
+} from "../store/todolists-reducer";
+import {addTaskAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer, updateTaskAC} from "../store/tasks-reducer";
+import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "../api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения

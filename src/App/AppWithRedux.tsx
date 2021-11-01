@@ -1,8 +1,18 @@
 import React, {useCallback, useEffect} from 'react';
 import './App.css';
-import TodoList from './todolist';
-import AddItemForm from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import TodoList from '../todolist';
+import AddItemForm from "../components/AddItemForm/AddItemForm";
+import {
+    AppBar,
+    Button,
+    CircularProgress,
+    Container,
+    Grid,
+    IconButton, LinearProgress,
+    Paper,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
     addTodolistTC,
@@ -12,11 +22,11 @@ import {
     FilterValuesType,
     removeTodolistTC,
     TodolistDomainType
-} from "./store/todolists-reducer";
-import {addTaskTC, removeTaskTC, updateTaskTC} from "./store/tasks-reducer";
+} from "../store/todolists-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "../store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType} from "./api/todolist-api";
+import {AppRootStateType} from "../store/store";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -98,6 +108,7 @@ export function AppWithRedux() {
                     >Login
                     </Button>
                 </Toolbar>
+                <LinearProgress />
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>

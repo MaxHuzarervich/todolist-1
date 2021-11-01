@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoList from './todolist';
+import TodoList from '../todolist';
 import {v1} from "uuid";
-import AddItemForm from "./AddItemForm";
+import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {
     AppBar,
-    Button,
+    Button, CircularProgress,
     Container,
     Grid,
     IconButton,
@@ -15,8 +15,8 @@ import {
     Typography
 } from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
-import {FilterValuesType, TodolistDomainType} from "./store/todolists-reducer";
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
+import {FilterValuesType, TodolistDomainType} from "../store/todolists-reducer";
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -177,7 +177,6 @@ function App() {
                     >Login
                     </Button>
                 </Toolbar>
-                <LinearProgress />
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>
