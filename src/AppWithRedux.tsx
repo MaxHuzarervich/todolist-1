@@ -5,25 +5,18 @@ import AddItemForm from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {
-    AddTodoListAC,
+    addTodolistTC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC,
+    changeTodolistTitleTC,
     fetchTodoListsTC,
     FilterValuesType,
-    RemoveTodoListsAC, removeTodolistTC,
+    removeTodolistTC,
     TodolistDomainType
 } from "./store/todolists-reducer";
-import {
-    addTaskAC,
-    addTaskTC,
-    ChangeTaskStatusAC,
-    ChangeTaskTitleAC,
-    removeTaskAC,
-    removeTaskTC
-} from "./store/tasks-reducer";
+import {addTaskTC, removeTaskTC, updateTaskTC} from "./store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "./store/store";
-import {TaskStatuses, TaskType, todolistApi} from "./api/todolist-api";
+import {TaskStatuses, TaskType} from "./api/todolist-api";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -50,20 +43,20 @@ export function AppWithRedux() {
     const removeTask = useCallback(function (taskID: string, todoListID: string) {
         const thunk = removeTaskTC(taskID, todoListID) //получаем санку при помощи санкреатора и диспатчим ее
         dispatch(thunk)
-    }, [])
+    }, [dispatch])
 
     const addTask = useCallback((title: string, todoListID: string) => {
         let action = addTaskTC(todoListID,title)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const changeTaskStatus = useCallback((taskID: string, status: TaskStatuses, todoListID: string) => {
-        let action = ChangeTaskStatusAC(taskID, status, todoListID)
-        dispatch(action)
+        let thunk = updateTaskTC(taskID, {status}, todoListID)
+        dispatch(thunk)
     }, [dispatch])
 
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
-        let action = ChangeTaskTitleAC(taskID, newTitle, todoListID)
+        let action = updateTaskTC(taskID, {title:newTitle}, todoListID)
         dispatch(action)
     }, [dispatch])
 
@@ -75,19 +68,19 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((title: string, todoListID: string) => {
-        let action = ChangeTodoListTitleAC(title, todoListID)
-        dispatch(action)
+        let thunk = changeTodolistTitleTC(todoListID,title)
+        dispatch(thunk)
     }, [dispatch])
 
     const removeTodolist = useCallback((todoListID: string) => {
         let action = removeTodolistTC(todoListID)
         dispatch(action)
-    }, [])
+    }, [dispatch])
 
     const addTodolist = useCallback((title: string) => {
-        let action = AddTodoListAC(title)
-        dispatch(action)
-    }, [dispatch]) //зависимость dispatch
+        let thunk = addTodolistTC(title)
+        dispatch(thunk)
+    }, [dispatch])
 
     //UI:
     return (

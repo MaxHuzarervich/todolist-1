@@ -8,11 +8,12 @@ import {Menu} from "@material-ui/icons";
 import {
     AddTodoListAC,
     ChangeTodoListFilterAC,
-    ChangeTodoListTitleAC, FilterValuesType,
+    ChangeTodoListTitleAC,
+    FilterValuesType,
     RemoveTodoListsAC,
     todoListsReducer
 } from "./store/todolists-reducer";
-import {addTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer} from "./store/tasks-reducer";
+import {addTaskAC, ChangeTaskTitleAC, removeTaskAC, tasksReducer, updateTaskAC} from "./store/tasks-reducer";
 import {TaskPriorities, TaskStatuses, TaskType, TodolistType} from "./api/todolist-api";
 
 export type TaskStateType = {
@@ -90,12 +91,12 @@ function AppWithReducer() {
     }
 
     function changeTaskStatus(taskID: string, status: TaskStatuses, todoListID: string) {
-        let action = ChangeTaskStatusAC(taskID, status, todoListID)
+        let action = updateTaskAC(taskID, {status}, todoListID)
         dispatchToTasks(action)
     }
 
     function changeTaskTitle(taskID: string, newTitle: string, todoListID: string) {
-        let action = ChangeTaskTitleAC(taskID, newTitle, todoListID)
+        let action = updateTaskAC(taskID, {title:newTitle}, todoListID)
         dispatchToTasks(action)
     }
 
@@ -118,7 +119,12 @@ function AppWithReducer() {
     }
 
     function addTodolist(title: string) {
-        let action = AddTodoListAC(title)
+        let action = AddTodoListAC({
+            id: v1(),
+            addedDate: '',
+            order: 0,
+            title: title
+        })
         dispatchToTasks(action)
         dispatchToTodoLists(action)
     }

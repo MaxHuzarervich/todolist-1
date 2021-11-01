@@ -4,10 +4,13 @@ import {
     ChangeTodoListFilterAC,
     ChangeTodoListTitleAC,
     FilterValuesType,
-    RemoveTodoListsAC, setTodoListsAC, TodolistDomainType,
+    RemoveTodoListsAC,
+    setTodoListsAC,
+    TodolistDomainType,
     todoListsReducer
 } from './todolists-reducer';
 import {v1} from 'uuid';
+import {TodolistType} from "../api/todolist-api";
 
 let todolistId1: string
 let todolistId2: string
@@ -34,12 +37,17 @@ test('correct todolist should be removed', () => {
 
 test('correct todolist should be added', () => {
 
-    let newTodolistTitle = "New Todolist";
+    let todolist:TodolistType = {
+        title:"New Todolist",
+        id: 'any id',
+        addedDate: '',
+        order: 0
+    }
 
-    const endState = todoListsReducer(startState, AddTodoListAC(newTodolistTitle))
+    const endState = todoListsReducer(startState, AddTodoListAC(todolist))
 
     expect(endState.length).toBe(3);
-    expect(endState[0].title).toBe(newTodolistTitle);
+    expect(endState[0].title).toBe(todolist);
 });
 
 test('correct todolist should change its name', () => {

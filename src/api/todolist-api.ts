@@ -67,6 +67,14 @@ type CreateUpdateTaskResponse<T = {}> = {
     messages: Array<string>,
     data: T
 }
+export type UpdateTaskModelType = {
+    title: string
+    description: string
+    status: TaskStatuses
+    priority: TaskPriorities
+    startDate: string
+    deadline: string
+}
 
 //объект, который будет заниматься запросами на сервер!
 export const todolistApi = {
@@ -91,7 +99,11 @@ export const todolistApi = {
     createTask(todolistId: string, title: string) {
         return instance.post<CreateUpdateTaskResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
     },
-    updateTaskTitle(todolistId: string, taskId: string, title: string) {
-        return instance.put<CreateUpdateTaskResponse<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+    // updateTaskTitle(todolistId: string, taskId: string, title: string) {
+    //     return instance.put<CreateUpdateTaskResponse<{ item: TaskType }>>
+    //     (`todo-lists/${todolistId}/tasks/${taskId}`, {title})
+    // },
+    updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+        return instance.put<CommonResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
     }
 }

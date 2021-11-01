@@ -3,7 +3,17 @@ import './App.css';
 import TodoList from './todolist';
 import {v1} from "uuid";
 import AddItemForm from "./AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
+import {
+    AppBar,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    LinearProgress,
+    Paper,
+    Toolbar,
+    Typography
+} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {FilterValuesType, TodolistDomainType} from "./store/todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolist-api";
@@ -167,6 +177,7 @@ function App() {
                     >Login
                     </Button>
                 </Toolbar>
+                <LinearProgress />
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>
