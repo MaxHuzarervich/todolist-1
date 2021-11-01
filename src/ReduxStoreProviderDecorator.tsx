@@ -34,6 +34,10 @@ const initialGlobalState = {
                 todoListId: "todolistId2", startDate: '', deadline: '', addedDate: '',
                 order: 0, priority: TaskPriorities.Low, description: ''}
         ]
+    },
+    app: {
+        error: null,
+        status: 'idle'
     }
 };
 export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
