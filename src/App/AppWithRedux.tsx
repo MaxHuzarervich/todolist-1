@@ -5,10 +5,10 @@ import AddItemForm from "../components/AddItemForm/AddItemForm";
 import {
     AppBar,
     Button,
-    CircularProgress,
     Container,
     Grid,
-    IconButton, LinearProgress,
+    IconButton,
+    LinearProgress,
     Paper,
     Toolbar,
     Typography
@@ -27,6 +27,7 @@ import {addTaskTC, removeTaskTC, updateTaskTC} from "../store/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store/store";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
+import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -95,6 +96,7 @@ export function AppWithRedux() {
     //UI:
     return (
         <div>
+            <ErrorSnackbar />
             <AppBar position={'static'}>
                 <Toolbar style={{justifyContent: 'space-between'}}>
                     <IconButton color={'inherit'}>

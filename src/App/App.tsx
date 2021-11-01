@@ -1,19 +1,9 @@
 import React, {useState} from 'react';
 import './App.css';
-import TodoList from '../todolist';
+import TodoList from '../../src/todolist';
 import {v1} from "uuid";
 import AddItemForm from "../components/AddItemForm/AddItemForm";
-import {
-    AppBar,
-    Button, CircularProgress,
-    Container,
-    Grid,
-    IconButton,
-    LinearProgress,
-    Paper,
-    Toolbar,
-    Typography
-} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {FilterValuesType, TodolistDomainType} from "../store/todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
