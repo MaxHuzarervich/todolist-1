@@ -1,5 +1,6 @@
 import {todolistApi, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
+import {RequestStatusType, setStatusAC} from "../App/app-reducer";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST'
@@ -40,6 +41,7 @@ const initialState: TodolistDomainType[] = []
 export type FilterValuesType = 'all' | 'active' | 'completed'  // типизируем переменную filter
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType
+    entityStatus: RequestStatusType
 }
 
 export const todoListsReducer =
@@ -48,7 +50,7 @@ export const todoListsReducer =
             case 'REMOVE-TODOLIST':
                 return state.filter(tl => tl.id !== action.todoListID)
             case 'ADD-TODOLIST': {
-                const newTodolist: TodolistDomainType = {...action.todolist, filter: 'all'}
+                const newTodolist: TodolistDomainType = {...action.todolist, filter: 'all', entityStatus:'idle'}
                 //забираем все из того тодолиста что приходит с сервера + filter: 'all'
                 return [newTodolist, ...state]
             }
@@ -60,7 +62,8 @@ export const todoListsReducer =
                 return action.todoLists.map(tl => {
                     return {
                         ...tl,
-                        filter: 'all'
+                        filter: 'all',
+                        entityStatus: 'idle'
                     }
                 })
             default:
@@ -111,9 +114,11 @@ export const removeTodolistTC = (todolistId: string) => {
 
 export const addTodolistTC = (title: string) => {
     return (dispatch: Dispatch): void => {
+        dispatch(setStatusAC('loading'))
         todolistApi.createTodo(title)
             .then((res) => {
                 dispatch(AddTodoListAC(res.data.data.item))
+                dispatch(setStatusAC('succeeded'))
             })
     }
 }

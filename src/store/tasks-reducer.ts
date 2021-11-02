@@ -3,7 +3,7 @@ import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reduc
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {setErrorAC, SetErrorActionType} from "../App/app-reducer";
+import {ActionsType, setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from "../App/app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -127,19 +127,20 @@ export const SetTasksAC = (tasks: Array<TaskType>, todoListID: string): SetTasks
 //thunkCreator
 
 export const fetchTasksTC = (todoListID: string) => {
-    return (dispatch: Dispatch): void => {
+    return (dispatch: Dispatch<ActionUnionType | SetStatusActionType>) => {
+        dispatch(setStatusAC('loading'))
         todolistApi.getTasks(todoListID)
             .then((res) => {
                 const tasks = res.data.items
-                const action = SetTasksAC(tasks, todoListID)
-                dispatch(action)
+                dispatch(SetTasksAC(tasks, todoListID))
+                dispatch(setStatusAC('succeeded'))
             })
 
     }
 }  //замыкание - здесь наша санка использует параметры из санккреатора           !!!!!!!
 
 export const removeTaskTC = (taskID: string, todoListID: string) => {
-    return (dispatch: Dispatch): void => {
+    return (dispatch: Dispatch) => {
         todolistApi.deleteTask(todoListID, taskID)
             .then((res) => {
                 let action = removeTaskAC(taskID, todoListID)

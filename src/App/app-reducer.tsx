@@ -34,6 +34,8 @@ export type InitialStateType = {
 }
 
 export type SetErrorActionType = ReturnType<typeof setErrorAC>;
+export type SetStatusActionType = ReturnType<typeof setStatusAC>;
 export type ActionsType =
     | SetErrorActionType
-    | ReturnType<typeof setStatusAC>
+    | SetStatusActionType
+    

@@ -28,6 +28,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store/store";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
+import {RequestStatusType} from "./app-reducer";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -42,6 +43,8 @@ export function AppWithRedux() {
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
 
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
+
+    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
 
     const dispatch = useDispatch()
 
@@ -110,7 +113,7 @@ export function AppWithRedux() {
                     >Login
                     </Button>
                 </Toolbar>
-                {/*<LinearProgress />*/}
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>
