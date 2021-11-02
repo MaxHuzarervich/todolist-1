@@ -110,7 +110,7 @@ export function AppWithRedux() {
                     >Login
                     </Button>
                 </Toolbar>
-                <LinearProgress />
+                {/*<LinearProgress />*/}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>

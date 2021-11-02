@@ -2,7 +2,7 @@ import React from "react";
 
 export const initialState: InitialStateType = {
     status: 'idle',
-    error: 'some error!'
+    error: null
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -33,4 +33,7 @@ export type InitialStateType = {
     error: null | string
 }
 
-type ActionsType = ReturnType<typeof setErrorAC | typeof setStatusAC>
+export type SetErrorActionType = ReturnType<typeof setErrorAC>;
+export type ActionsType =
+    | SetErrorActionType
+    | ReturnType<typeof setStatusAC>

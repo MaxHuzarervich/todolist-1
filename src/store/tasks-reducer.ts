@@ -3,6 +3,7 @@ import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reduc
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
+import {setErrorAC, SetErrorActionType} from "../App/app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -148,12 +149,18 @@ export const removeTaskTC = (taskID: string, todoListID: string) => {
 }
 
 export const addTaskTC = (todolistId: string, title: string) => {
-    return (dispatch: Dispatch): void => {
+    return (dispatch: Dispatch<ActionUnionType | SetErrorActionType>) => {
         todolistApi.createTask(todolistId, title)
             .then((res) => {
+                if(res.data.resultCode === 0){
                 const task = res.data.data.item
                 const action = addTaskAC(task)
-                dispatch(action)
+                dispatch(action)}
+                else{
+                    if(res.data.messages.length){
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    }else {setErrorAC('some error occurred')}
+                }
             })
     }
 }
