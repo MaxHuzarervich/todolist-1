@@ -1,13 +1,6 @@
 import React from "react";
 
-export type InitialStateType = {
-    //происходит ли сейчас взаимодействие с сервером
-    status: 'idle' | 'loading' | 'succeeded' | 'failed',
-    //если произойдет какая-то глобальная ошибка - мы запишем текст ошибки сюда
-    error: null | string
-}
-
-const initialState:InitialStateType = {
+export const initialState: InitialStateType = {
     status: 'idle',
     error: 'some error!'
 }
@@ -17,10 +10,27 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
         case 'APP/SET-STATUS':
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
-            return {...state, status: action.error}
+            return {...state, error: action.error}
         default:
             return {...state}
     }
 }
 
-type ActionsType = any
+export const setErrorAC = (error: string | null) => (
+    {type: 'APP/SET-ERROR', error} as const
+)
+
+export const setStatusAC = (status: RequestStatusType) => (
+    {type: 'APP/SET-STATUS', status} as const
+)
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
+export type InitialStateType = {
+    //происходит ли сейчас взаимодействие с сервером
+    status: RequestStatusType,
+    //если произойдет какая-то глобальная ошибка - мы запишем текст ошибки сюда
+    error: null | string
+}
+
+type ActionsType = ReturnType<typeof setErrorAC | typeof setStatusAC>
