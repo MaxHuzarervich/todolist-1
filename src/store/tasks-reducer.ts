@@ -3,7 +3,7 @@ import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reduc
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {ActionsType, setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from "../App/app-reducer";
+import {setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from "../App/app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -153,15 +153,20 @@ export const addTaskTC = (todolistId: string, title: string) => {
     return (dispatch: Dispatch<ActionUnionType | SetErrorActionType>) => {
         todolistApi.createTask(todolistId, title)
             .then((res) => {
-                if(res.data.resultCode === 0){
-                const task = res.data.data.item
-                const action = addTaskAC(task)
-                dispatch(action)}
-                else{
-                    if(res.data.messages.length){
+                if (res.data.resultCode === 0) {
+                    const task = res.data.data.item
+                    const action = addTaskAC(task)
+                    dispatch(action)
+                } else {
+                    if (res.data.messages.length) {
                         dispatch(setErrorAC(res.data.messages[0]))
-                    }else {setErrorAC('some error occurred')}
+                    } else {
+                        setErrorAC('some error occurred')
+                    }
                 }
+            })
+            .catch((error) => {
+                setErrorAC(error.message)
             })
     }
 }
@@ -194,8 +199,20 @@ export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelT
         }
         todolistApi.updateTask(todoListID, taskID, apiModel)
             .then((res) => {
-                const action = updateTaskAC(taskID, domainModel, todoListID)
-                dispatch(action)
+                if (res.data.resultCode === 0) {
+                    const action = updateTaskAC(taskID, domainModel, todoListID)
+                    dispatch(action)
+                } else {
+                    // handleServerAppError(res.data, dispatch);
+                    if (res.data.messages.length) {
+                        dispatch(setErrorAC(res.data.messages[0]))
+                    } else {
+                        setErrorAC('some error occurred')
+                    }
+                }
+            })
+            .catch((error) => {
+                setErrorAC(error.message)
             })
     }
 }
