@@ -34,7 +34,11 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
 }
 
-export function AppWithRedux() {
+type AppWithReduxPropsType = {
+    demo?: boolean
+}
+
+export const AppWithRedux: React.FC<AppWithReduxPropsType> = ({demo = false}) => {
 //BLL:
     //для того чтобы забрать что нужно из redux используем useSelector
     //для того чтобы задиспатчить что то в redux используем hook useDispatch, который нам возвращает
@@ -48,8 +52,10 @@ export function AppWithRedux() {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-
+    useEffect(() => { //если не демо режим, то загрузим тудулисты с сервера
+        if (demo) {
+            return
+        }
         dispatch(fetchTodoListsTC())  //получение тудулистов
 
     }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
@@ -60,7 +66,7 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const addTask = useCallback((title: string, todoListID: string) => {
-        let action = addTaskTC(todoListID,title)
+        let action = addTaskTC(todoListID, title)
         dispatch(action)
     }, [dispatch])
 
@@ -70,7 +76,7 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
-        let action = updateTaskTC(taskID, {title:newTitle}, todoListID)
+        let action = updateTaskTC(taskID, {title: newTitle}, todoListID)
         dispatch(action)
     }, [dispatch])
 
@@ -82,7 +88,7 @@ export function AppWithRedux() {
     }, [dispatch])
 
     const changeTodolistTitle = useCallback((title: string, todoListID: string) => {
-        let thunk = changeTodolistTitleTC(todoListID,title)
+        let thunk = changeTodolistTitleTC(todoListID, title)
         dispatch(thunk)
     }, [dispatch])
 
@@ -99,7 +105,7 @@ export function AppWithRedux() {
     //UI:
     return (
         <div>
-            <ErrorSnackbar />
+            <ErrorSnackbar/>
             <AppBar position={'static'}>
                 <Toolbar style={{justifyContent: 'space-between'}}>
                     <IconButton color={'inherit'}>
@@ -113,7 +119,7 @@ export function AppWithRedux() {
                     >Login
                     </Button>
                 </Toolbar>
-                {status === 'loading' && <LinearProgress />}
+                {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
                 <Grid container style={{padding: '20px 0px '}}>
@@ -131,10 +137,8 @@ export function AppWithRedux() {
                                        }}>
                                     <TodoList
                                         key={tl.id}                   //id for react мы его не используем
-                                        todoListID={tl.id}
-                                        title={tl.title}
+                                        todolist={tl}
                                         tasks={tasks[tl.id]}
-                                        filter={tl.filter}
                                         addTask={addTask}
                                         removeTask={removeTask}
                                         changeFilter={changeFilter}
@@ -142,6 +146,7 @@ export function AppWithRedux() {
                                         removeTodolist={removeTodolist}
                                         changeTaskTitle={changeTaskTitle}
                                         changeTodolistTitle={changeTodolistTitle}
+                                        demo={demo}
                                     />
                                 </Paper>
                             </Grid>

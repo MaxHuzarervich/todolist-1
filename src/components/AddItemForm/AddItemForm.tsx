@@ -4,9 +4,10 @@ import {IconButton, TextField} from "@material-ui/core";
 
 type AddItemFormPropsType = {
     addItem: (title: string) => void
+    disabled?: boolean
 }
 
-export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo(({addItem, disabled = false}:AddItemFormPropsType) => {
     const [title, setTitle] = useState('')
     const [error, setError] = useState<boolean>(false)
 
@@ -15,10 +16,10 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
         setTitle(e.currentTarget.value)
         setError(false)
     }
-    const addItem = () => {
+    const addItemHandler = () => {
         const trimmedTitle = title.trim()  //удаляет у строки все пробелы с двух сторон
         if (trimmedTitle) {
-            props.addItem(trimmedTitle)
+            addItem(trimmedTitle)
         } else {
             setError(true)
         }
@@ -28,13 +29,14 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
     const onKeyPressAddItem = (e: KeyboardEvent<HTMLInputElement>) => {
         // if(error !== null) setError(null)
         if (e.key === 'Enter') {
-            addItem()
+            addItemHandler()
         }
     }
 
     return (
         <div>
             <TextField
+                disabled={disabled}
                 variant={'outlined'}
                 error={error}
                 value={title}
@@ -44,7 +46,7 @@ export const AddItemForm = React.memo((props: AddItemFormPropsType) => {
                 helperText={error && 'Title is required!'}
                 size={'small'}
             />
-            <IconButton onClick={addItem} color={'primary'}>
+            <IconButton onClick={addItemHandler} color={'primary'} disabled={disabled}>
                 <AddBox/>
             </IconButton>
             {/*{errorMessage}*/}

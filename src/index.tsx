@@ -6,11 +6,12 @@ import {AppWithRedux} from "./App/AppWithRedux";
 import {Provider} from "react-redux";
 import {store} from "./store/store";
 import AppWithReducers from "./App/AppWithReducers";
+import App from "./App/App";
 
 const AppWithReducersComponent = AppWithReducers
 
 ReactDOM.render(<Provider store={store}>
-    <AppWithRedux/>
+    <App />
 </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

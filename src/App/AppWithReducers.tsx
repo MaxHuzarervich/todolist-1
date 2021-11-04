@@ -149,10 +149,8 @@ function AppWithReducer() {
                            style={{padding: '15px', borderRadius: '10px', border: '1px solid lightblue'}}>
                         <TodoList
                             key={tl.id}                   //id for react мы его не используем
-                            todoListID={tl.id}
-                            title={tl.title}
+                            todolist={tl}
                             tasks={getTasksForTodolist(tl)}
-                            filter={tl.filter}
                             addTask={addTask}
                             removeTask={removeTask}
                             changeFilter={changeFilter}

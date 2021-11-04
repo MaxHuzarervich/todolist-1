@@ -3,7 +3,7 @@ import {AddTodoListAT, RemoveTodoListAT, SetTodoListsAT} from "./todolists-reduc
 import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
-import {setErrorAC, SetErrorActionType, setStatusAC, SetStatusActionType} from "../App/app-reducer";
+import {setAppErrorAC, SetErrorActionType, setAppStatusAC, SetStatusActionType} from "../App/app-reducer";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -128,12 +128,12 @@ export const SetTasksAC = (tasks: Array<TaskType>, todoListID: string): SetTasks
 
 export const fetchTasksTC = (todoListID: string) => {
     return (dispatch: Dispatch<ActionUnionType | SetStatusActionType>) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setAppStatusAC('loading'))
         todolistApi.getTasks(todoListID)
             .then((res) => {
                 const tasks = res.data.items
                 dispatch(SetTasksAC(tasks, todoListID))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded'))
             })
 
     }
@@ -159,14 +159,14 @@ export const addTaskTC = (todolistId: string, title: string) => {
                     dispatch(action)
                 } else {
                     if (res.data.messages.length) {
-                        dispatch(setErrorAC(res.data.messages[0]))
+                        dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {
-                        setErrorAC('some error occurred')
+                        setAppErrorAC('some error occurred')
                     }
                 }
             })
             .catch((error) => {
-                setErrorAC(error.message)
+                setAppErrorAC(error.message)
             })
     }
 }
@@ -205,14 +205,14 @@ export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelT
                 } else {
                     // handleServerAppError(res.data, dispatch);
                     if (res.data.messages.length) {
-                        dispatch(setErrorAC(res.data.messages[0]))
+                        dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {
-                        setErrorAC('some error occurred')
+                        setAppErrorAC('some error occurred')
                     }
                 }
             })
             .catch((error) => {
-                setErrorAC(error.message)
+                setAppErrorAC(error.message)
             })
     }
 }

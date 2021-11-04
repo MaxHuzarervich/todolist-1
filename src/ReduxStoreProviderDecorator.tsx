@@ -51,7 +51,7 @@ const initialGlobalState = {
         status: 'idle'
     }
 };                                  //если нет стейта который можно предзагружать, то applyMiddleware
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType, applyMiddleware(thunkMiddleware));
+export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType,applyMiddleware(thunkMiddleware));
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
