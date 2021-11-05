@@ -4,6 +4,7 @@ import {TaskPriorities, TaskStatuses, TaskType, todolistApi, UpdateTaskModelType
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 import {setAppErrorAC, SetErrorActionType, setAppStatusAC, SetStatusActionType, ActionsType} from "../App/app-reducer";
+import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
 
 export type RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -167,8 +168,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
                 }
             })
             .catch((error) => {
-                dispatch(setAppErrorAC(error.message))
-                dispatch(setAppStatusAC('failed'))
+                handleServerNetworkError(error,dispatch)
             })
     }
 }
@@ -205,16 +205,11 @@ export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelT
                     const action = updateTaskAC(taskID, domainModel, todoListID)
                     dispatch(action)
                 } else {
-                    // handleServerAppError(res.data, dispatch);
-                    if (res.data.messages.length) {
-                        dispatch(setAppErrorAC(res.data.messages[0]))
-                    } else {
-                        setAppErrorAC('some error occurred')
-                    }
+                    handleServerAppError(res.data, dispatch);
                 }
             })
             .catch((error) => {
-                setAppErrorAC(error.message)
+                handleServerNetworkError(error,dispatch)
             })
     }
 }

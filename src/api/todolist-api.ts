@@ -10,7 +10,7 @@ const instance = axios.create({
 })
 
 //если D не передавать то это пустой объект (ДЖЕНЕРИК тип)
-type CommonResponseType<D = {}> = {
+export type CommonResponseType<D = {}> = {
     fieldsErrors: Array<string>,
     messages: Array<string>,
     resultCode: number,
