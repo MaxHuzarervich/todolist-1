@@ -8,6 +8,7 @@ import {Menu} from "@material-ui/icons";
 import {FilterValuesType, TodolistDomainType} from "../store/todolists-reducer";
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolist-api";
 import {AppWithRedux} from "./AppWithRedux";
+import {BrowserRouter} from "react-router-dom";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -19,7 +20,7 @@ type propsType = {
 
 function App({demo = false}:propsType) {
     return (
-        <AppWithRedux demo={demo}/>
+        <BrowserRouter><AppWithRedux demo={demo}/></BrowserRouter>
     )
 
 }

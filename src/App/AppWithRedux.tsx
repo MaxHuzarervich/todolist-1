@@ -13,7 +13,7 @@ import {
     Toolbar,
     Typography
 } from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
+import {Menu, Router} from "@material-ui/icons";
 import {
     addTodolistTC,
     ChangeTodoListFilterAC,
@@ -29,6 +29,7 @@ import {AppRootStateType} from "../store/store";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {RequestStatusType} from "./app-reducer";
+import {Login} from "../login/login";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -122,6 +123,8 @@ export const AppWithRedux: React.FC<AppWithReduxPropsType> = ({demo = false}) =>
                 {status === 'loading' && <LinearProgress/>}
             </AppBar>
             <Container fixed>
+                <Route />
+                <Route path={'/login'} render={() => <Login />} />
                 <Grid container style={{padding: '20px 0px '}}>
                     <AddItemForm addItem={addTodolist}/>
                 </Grid>

@@ -155,9 +155,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
         todolistApi.createTask(todolistId, title)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    const task = res.data.data.item
-                    const action = addTaskAC(task)
-                    dispatch(action)
+                    dispatch(addTaskAC(res.data.data.item))
                 } else {
                     if (res.data.messages.length) {
                         dispatch(setAppErrorAC(res.data.messages[0]))
@@ -168,7 +166,7 @@ export const addTaskTC = (todolistId: string, title: string) => {
                 }
             })
             .catch((error) => {
-                handleServerNetworkError(error,dispatch)
+                handleServerNetworkError(error, dispatch)
             })
     }
 }
@@ -209,7 +207,7 @@ export const updateTaskTC = (taskID: string, domainModel: UpdateDomainTaskModelT
                 }
             })
             .catch((error) => {
-                handleServerNetworkError(error,dispatch)
+                handleServerNetworkError(error, dispatch)
             })
     }
 }
