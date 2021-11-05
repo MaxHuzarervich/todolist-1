@@ -1,6 +1,6 @@
 import {todolistApi, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
-import {RequestStatusType, setAppStatusAC, SetStatusActionType} from "../App/app-reducer";
+import {RequestStatusType, setAppStatusAC, SetStatusActionType} from "../app/app-reducer";
 import {Simulate} from "react-dom/test-utils";
 
 export type RemoveTodoListAT = {

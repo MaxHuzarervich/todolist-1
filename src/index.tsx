@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {AppWithRedux} from "./App/AppWithRedux";
+import {App} from "./app/App";
 import {Provider} from "react-redux";
-import {store} from "./store/store";
-import AppWithReducers from "./App/AppWithReducers";
-import App from "./App/App";
+import {store} from "./app/store";
+import AppWithReducers from "./app/AppWithReducers";
 
 const AppWithReducersComponent = AppWithReducers
 
