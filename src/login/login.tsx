@@ -7,8 +7,21 @@ import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import {useFormik} from "formik";
 
 export const Login = () => {
+
+    const formik = useFormik({
+        initialValues: {     // инициализационные значения которые покажутся в форме
+            email: '',
+            password: '',
+            rememberMe: false
+        },
+        onSubmit: values => {  // коллбек в который придут все значения которые форма собрала во время своего сабмита
+            alert(JSON.stringify(values,null,2))
+        },
+    });
+
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <FormControl>

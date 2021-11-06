@@ -23,29 +23,28 @@ export const App: React.FC<AppWithReduxPropsType> = ({demo = false}) => {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
         <BrowserRouter>
-        <div>
-            <ErrorSnackbar/>
-            <AppBar position={'static'}>
-                <Toolbar style={{justifyContent: 'space-between'}}>
-                    <IconButton color={'inherit'}>
-                        <Menu/>
-                    </IconButton>
-                    <Typography variant={'h6'}>
-                        Todolists
-                    </Typography>
-                    <Button color={'inherit'}
-                            variant={'outlined'}
-                    >Login
-                    </Button>
-                </Toolbar>
-                {status === 'loading' && <LinearProgress/>}
-            </AppBar>
-            <Container fixed>
-                <Route exact path={'/login'} render={() => <Login />}/>
-                <Route path={'/'} render={() => <TodolistList />}/>
-            </Container>
-
-        </div>
+            <div>
+                <ErrorSnackbar/>
+                <AppBar position={'static'}>
+                    <Toolbar style={{justifyContent: 'space-between'}}>
+                        <IconButton color={'inherit'}>
+                            <Menu/>
+                        </IconButton>
+                        <Typography variant={'h6'}>
+                            TodoLists
+                        </Typography>
+                        <Button color={'inherit'}
+                                variant={'outlined'}
+                        >Login
+                        </Button>
+                    </Toolbar>
+                    {status === 'loading' && <LinearProgress/>}
+                </AppBar>
+                <Container fixed>
+                    <Route exact path={'/'} render={() => <TodolistList/>}/>
+                    <Route path={'/login'} render={() => <Login/>}/>
+                </Container>
+            </div>
         </BrowserRouter>
     );
 }
