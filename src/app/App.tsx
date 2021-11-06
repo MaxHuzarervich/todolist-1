@@ -4,22 +4,20 @@ import {AppBar, Button, Container, IconButton, LinearProgress, Toolbar, Typograp
 import {Menu} from "@material-ui/icons";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "./store";
-import {TaskType} from "../api/todolist-api";
 import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {RequestStatusType} from "./app-reducer";
 import {Login} from "../login/login";
 import {TodolistList} from './TodolistList';
 import {BrowserRouter, Route} from "react-router-dom";
+import { Routes } from "react-router-dom";
+import {TaskType} from "../api/todolist-api";
+
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
 }
 
-type AppWithReduxPropsType = {
-    demo?: boolean
-}
-
-export const App: React.FC<AppWithReduxPropsType> = ({demo = false}) => {
+export const App = () => {
     const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     return (
         <BrowserRouter>
@@ -41,8 +39,10 @@ export const App: React.FC<AppWithReduxPropsType> = ({demo = false}) => {
                     {status === 'loading' && <LinearProgress/>}
                 </AppBar>
                 <Container fixed>
-                    <Route exact path={'/'} render={() => <TodolistList/>}/>
-                    <Route path={'/login'} render={() => <Login/>}/>
+                    <Routes>
+                    <Route path='/' element={<TodolistList/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                    </Routes>
                 </Container>
             </div>
         </BrowserRouter>

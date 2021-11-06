@@ -14,8 +14,11 @@ import {
     TodolistDomainType
 } from "../features/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
-import {TaskStatuses} from "../api/todolist-api";
-import {TaskStateType} from "./App";
+import {TaskStatuses, TaskType} from "../api/todolist-api";
+
+export type TaskStateType = {
+    [key: string]: Array<TaskType>          //типизация для вычисляемого значения
+}
 
 export const TodolistList:React.FC = () => {
     //BLL:

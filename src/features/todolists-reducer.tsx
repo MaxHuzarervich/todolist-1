@@ -1,7 +1,6 @@
 import {todolistApi, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {RequestStatusType, setAppStatusAC, SetStatusActionType} from "../app/app-reducer";
-import {Simulate} from "react-dom/test-utils";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST'
@@ -30,13 +29,19 @@ export type SetTodoListsAT = {             //для получения туду�
     todoLists: Array<TodolistType>
 }
 
+type ChangeTodoListEntityStatusAT = {
+    type: 'CHANGE-TODOLIST-ENTITY-STATUS',
+    status: RequestStatusType,
+    todoListID: string
+}
+
 export type ActionUnionType =
     RemoveTodoListAT
     | AddTodoListAT
     | ChangeTodoListTitleAT
     | ChangeTodoListFilterAT
     | SetTodoListsAT
-    | ReturnType<typeof ChangeTodoListEntityStatusAC>
+    | ChangeTodoListEntityStatusAT
 
 const initialState: TodolistDomainType[] = []
 
@@ -46,7 +51,7 @@ export type TodolistDomainType = TodolistType & {
     entityStatus: RequestStatusType
 }
 
-type ThunkDispatch = Dispatch<ActionUnionType | SetStatusActionType>
+export type ThunkDispatch = Dispatch<ActionUnionType | SetStatusActionType>
 
 export const todoListsReducer =
     (state = initialState, action: ActionUnionType): Array<TodolistDomainType> => {
@@ -62,7 +67,7 @@ export const todoListsReducer =
                 return state.map(tl => tl.id === action.todoListID ? {...tl, title: action.title} : tl)
             case 'CHANGE-TODOLIST-FILTER':
                 return state.map(tl => tl.id === action.todoListID ? {...tl, filter: action.filter} : tl)
-            case "CHANGE-TODOLIST-ENTITY-STATUS":
+            case 'CHANGE-TODOLIST-ENTITY-STATUS':
                 return state.map(tl => tl.id === action.todoListID ? {...tl, entityStatus: action.status} : tl)
             case "SET-TODOLISTS":
                 return action.todoLists.map(tl => {
