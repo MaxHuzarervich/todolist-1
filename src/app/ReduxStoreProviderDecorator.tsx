@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
     app: appReducer,
 })
 
-const initialGlobalState = {
+const initialGlobalState:AppRootStateType = {
     todolists: [
         {id: "todolistId1", title: "What to learn", filter: "all", entityStatus: 'idle', addedDate: '', order: 0},
         {id: "todolistId2", title: "What to buy", filter: "all", entityStatus: 'idle', addedDate: '', order: 0}
@@ -48,13 +48,15 @@ const initialGlobalState = {
     },
     app: {
         error: null,
-        status: 'idle'
+        status: 'idle',
+        isInitialized: false
     },
     login: {
         isLoggedIn: false
-    }
+    },
+
 };                                  //если нет стейта который можно предзагружать, то applyMiddleware
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType, applyMiddleware(thunkMiddleware));
+export const storyBookStore = createStore(rootReducer, initialGlobalState, applyMiddleware(thunkMiddleware));
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {

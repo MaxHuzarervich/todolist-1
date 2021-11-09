@@ -15,6 +15,7 @@ import {
 } from "../features/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
+import {Redirect} from "@reach/router";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -27,12 +28,17 @@ export const TodolistList:React.FC = () => {
     // функцию dispatch в который мы засовываем action который мы хотим как конструкцию отправить в redux
 
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
-
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
+
+
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if(!isLoggedIn){     // если мы не залогинены, то будет прерывание
+            return
+        }
         dispatch(fetchTodoListsTC())  //получение тудулистов
 
     }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
@@ -78,6 +84,10 @@ export const TodolistList:React.FC = () => {
         let thunk = addTodolistTC(title)
         dispatch(thunk)
     }, [dispatch])
+
+    if(!isLoggedIn){
+        return <Redirect to = {'/login'} />
+    }
 
     return <>
         <Grid container style={{padding: '20px 0px '}}>

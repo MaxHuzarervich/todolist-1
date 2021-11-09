@@ -11,7 +11,7 @@ type setIsLoggedInAT = {
 type ActionsType = setIsLoggedInAT
 
 type initialStateType = {
-    isLoggedIn: boolean
+    isLoggedIn: boolean,
 }
 const initialState: initialStateType = {
     isLoggedIn: false
@@ -33,7 +33,8 @@ export const setIsLoggedInAC = (value: boolean) => {
 
 //THUNK - ф-ция которая делает асинхронную операцию и по итогу диспатчит экшн
 //thunkCreator
-export const loginTC = (data: LoginParamsType) => {
+
+   export const loginTC = (data: LoginParamsType) => {
     return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
         dispatch(setAppStatusAC('loading'))
         authAPI.login(data)
@@ -51,4 +52,22 @@ export const loginTC = (data: LoginParamsType) => {
     }
 }
 //замыкание - здесь наша санка использует параметры из санккреатора           !!!!!!!
+
+export const logoutTC = () => {
+    return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
+        dispatch(setAppStatusAC('loading'))
+        authAPI.logout()
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setIsLoggedInAC(false))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    handleServerAppError(res.data, dispatch);
+                }
+            })
+            .catch((error) => {
+                handleServerNetworkError(error, dispatch)
+            })
+    }
+}
 

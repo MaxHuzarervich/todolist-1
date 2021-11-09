@@ -1,8 +1,12 @@
 import React from "react";
+import {Dispatch} from "redux";
+import {authAPI} from "../api/todolist-api";
+import {setIsLoggedInAC} from "../login/auth-reducer";
 
 export const initialState: InitialStateType = {
     status: 'idle',
-    error: null
+    error: null,
+    isInitialized: false
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -11,6 +15,8 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return {...state, error: action.error}
+        case "APP/SET-IS-INITIALIZED":
+            return {...state, isInitialized: action.value}
         default:
             return {...state}
     }
@@ -24,18 +30,37 @@ export const setAppStatusAC = (status: RequestStatusType) => (
     {type: 'APP/SET-STATUS', status} as const
 )
 
+export const SetAppInitializedAC = (value: boolean) => (
+    {type: 'APP/SET-IS-INITIALIZED', value} as const
+)
+
+export const initializedAppTC = () => (dispatch: Dispatch) => {
+    authAPI.me().then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))
+        }else{
+
+        }
+        dispatch(SetAppInitializedAC(true))
+    })
+}
+
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialStateType = {
     //происходит ли сейчас взаимодействие с сервером
     status: RequestStatusType,
     //если произойдет какая-то глобальная ошибка - мы запишем текст ошибки сюда
-    error: null | string
+    error: null | string,
+    //true когда приложение проинициализировалось (проверили юзера, настройки проверили и т.д.)
+    isInitialized: boolean
 }
 
 export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
 export type SetStatusActionType = ReturnType<typeof setAppStatusAC>;
+export type SetAppInitializedActionType = ReturnType<typeof SetAppInitializedAC>
 export type ActionsType =
     | SetErrorActionType
     | SetStatusActionType
+    | SetAppInitializedActionType
     

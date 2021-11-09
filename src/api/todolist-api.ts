@@ -112,8 +112,16 @@ export type LoginParamsType = {
 }
 
 export const authAPI = {
-login(data: LoginParamsType){                                         //делаем запрос на 'auth/login' и отправляем data
-const promise = instance.post<CommonResponseType<{userId?: number}>>('auth/login', data)
-    return promise
-}
+    login(data: LoginParamsType) {                                         //делаем запрос на 'auth/login' и отправляем data
+        const promise = instance.post<CommonResponseType<{ userId?: number }>>('auth/login', data)
+        return promise
+    },
+    logout() {
+        const promise = instance.delete<CommonResponseType<{ userId?: number }>>('auth/login')
+        return promise
+    },
+    me() {
+        const promise = instance.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me')
+        return promise
+    }
 }
