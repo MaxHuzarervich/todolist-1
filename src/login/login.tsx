@@ -8,8 +8,16 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {useDispatch, useSelector} from "react-redux";
+import {loginTC} from "./auth-reducer";
+import {AppRootStateType} from "../app/store";
+import {Redirect} from "@reach/router";
 
 export const Login = () => {
+
+    const dispatch = useDispatch()
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const formik = useFormik({
         validate: (values) => {
@@ -30,9 +38,13 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {  // коллбек в который придут все значения которые форма собрала во время своего сабмита
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
         },
     });
+
+    if(isLoggedIn){                     //если мы не залогинены, то код идет дальше и возвращает форму логина
+        return <Redirect to='/' />
+    }
 
     return <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

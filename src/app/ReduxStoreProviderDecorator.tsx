@@ -12,7 +12,7 @@ import thunkMiddleware from "redux-thunk";
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todoListsReducer,
-    app: appReducer
+    app: appReducer,
 })
 
 const initialGlobalState = {
@@ -49,12 +49,14 @@ const initialGlobalState = {
     app: {
         error: null,
         status: 'idle'
+    },
+    login: {
+        isLoggedIn: false
     }
 };                                  //если нет стейта который можно предзагружать, то applyMiddleware
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType,applyMiddleware(thunkMiddleware));
+export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType, applyMiddleware(thunkMiddleware));
 
 
 export const ReduxStoreProviderDecorator = (storyFn: () => React.ReactNode) => {
-
     return <Provider store={store}>{storyFn()}</Provider>
 }
