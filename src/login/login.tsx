@@ -14,21 +14,20 @@ import {AppRootStateType} from "../app/store";
 import {Redirect} from "@reach/router";
 
 export const Login = () => {
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const dispatch = useDispatch()
 
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-
     const formik = useFormik({
         validate: (values) => {
-            if(!values.email){
+            if (!values.email) {
                 return {
-                    email: 'Email is required'
+                    email: <span style={{color:'red'}}>Email is required</span>
                 }
             }
-            if(!values.password){
+            if (!values.password) {
                 return {
-                    password: 'Password is required'
+                    password:  <span style={{color:'red'}}>Password is required</span>
                 }
             }
         },
@@ -38,12 +37,12 @@ export const Login = () => {
             rememberMe: false
         },
         onSubmit: values => {  // коллбек в который придут все значения которые форма собрала во время своего сабмита
-            dispatch(loginTC(values))
+            dispatch(loginTC(values)) //санка отправляет данные на сервер
         },
     });
 
-    if(isLoggedIn){                     //если мы не залогинены, то код идет дальше и возвращает форму логина
-        return <Redirect to='/' />      // и наоборот если залогинены редиректит к тудулистам)
+    if (isLoggedIn) {                     //если мы не залогинены, то код идет дальше и возвращает форму логина
+        return <Redirect to='/'/>      // и наоборот если залогинены редиректит к тудулистам)
     }
 
     return <Grid container justifyContent={'center'}>

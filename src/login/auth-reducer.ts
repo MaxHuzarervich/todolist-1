@@ -69,5 +69,5 @@ export const logoutTC = () => {
                 handleServerNetworkError(error, dispatch)
             })
     }
-}
+ }
 
