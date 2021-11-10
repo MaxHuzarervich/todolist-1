@@ -19,19 +19,15 @@ type TodoListPropsType = {
     removeTodolist: (todoListID: string) => void
     changeTaskTitle: (taskID: string, newTitle: string, todoListID: string) => void
     changeTodolistTitle: (title: string, todoListID: string) => void
-    demo?:boolean
 }
-                                       //конкретно demo вынуть, если не передали будет по умолчанию false
-const TodoList = React.memo(({demo = false, ...props}:TodoListPropsType) => {
+
+const TodoList = React.memo(({...props}: TodoListPropsType) => {
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if (demo) {     // если не демо режим, то загрузи таски с сервера --->
-            return;
-        }
         dispatch(fetchTasksTC(props.todolist.id)) //получить таски тудулиста
-    }, [])
+    }, [dispatch])
 
 
     // const {filter} = props

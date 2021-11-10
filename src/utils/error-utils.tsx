@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import {setAppErrorAC, setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../app/app-reducer";
-import {CommonResponseType} from "../api/todolist-api";
+import {ResponseType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 
-export const handleServerAppError = (data: CommonResponseType, dispatch: Dispatch <SetErrorActionType | SetStatusActionType>) => {
+export const handleServerAppError = (data: ResponseType, dispatch: Dispatch <SetErrorActionType | SetStatusActionType>) => {
     if (data.messages.length) {
         dispatch(setAppErrorAC(data.messages[0]))
     } else {
@@ -14,6 +14,6 @@ export const handleServerAppError = (data: CommonResponseType, dispatch: Dispatc
 
 
 export const handleServerNetworkError = (error: { message: string }, dispatch: Dispatch <SetErrorActionType | SetStatusActionType>) => {
-    dispatch(setAppErrorAC(error.message ? error.message: 'some error occured'))
+    dispatch(setAppErrorAC(error.message ? error.message: 'Some error occurred'))
     dispatch(setAppStatusAC('failed'))
 }

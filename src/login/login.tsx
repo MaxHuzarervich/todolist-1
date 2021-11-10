@@ -14,6 +14,7 @@ import {AppRootStateType} from "../app/store";
 import {Redirect} from "@reach/router";
 
 export const Login = () => {
+    //залогинены или нет? если нет, то возвращаем форму логина
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const dispatch = useDispatch()
@@ -22,12 +23,12 @@ export const Login = () => {
         validate: (values) => {
             if (!values.email) {
                 return {
-                    email: <span style={{color:'red'}}>Email is required</span>
+                    email: 'Email is required'
                 }
             }
             if (!values.password) {
                 return {
-                    password:  <span style={{color:'red'}}>Password is required</span>
+                    password: 'Password is required'
                 }
             }
         },
@@ -42,7 +43,7 @@ export const Login = () => {
     });
 
     if (isLoggedIn) {                     //если мы не залогинены, то код идет дальше и возвращает форму логина
-        return <Redirect to='/'/>      // и наоборот если залогинены редиректит к тудулистам)
+        return <Redirect to={'/'}/>      // и наоборот если залогинены редиректит к тудулистам)
     }
 
     return <Grid container justifyContent={'center'}>
@@ -52,7 +53,7 @@ export const Login = () => {
                     <FormLabel>
                         <p>To log in get registered
                             <a href={'https://social-network.samuraijs.com/'}
-                               target={'_blank'}> here
+                               target={'_blank'} rel="noreferrer"> here
                             </a>
                         </p>
                         <p>or use common test account credentials:</p>

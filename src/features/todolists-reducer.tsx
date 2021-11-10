@@ -70,7 +70,7 @@ export const todoListsReducer =
                 return state.map(tl => tl.id === action.todoListID ? {...tl, filter: action.filter} : tl)
             case 'CHANGE-TODOLIST-ENTITY-STATUS':
                 return state.map(tl => tl.id === action.todoListID ? {...tl, entityStatus: action.status} : tl)
-            case "SET-TODOLISTS":
+            case 'SET-TODOLISTS':
                 return action.todoLists.map(tl => {
                     return {
                         ...tl,
@@ -106,15 +106,16 @@ export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT =
 
 export const fetchTodoListsTC = () => {
     return (dispatch: ThunkDispatch): void => {
+        dispatch(setAppStatusAC('loading'))
         //1.side effect
-        todolistApi.getTodolists()              //делаем запрос
+        todolistApi.getTodoLists()              //делаем запрос
             .then((res) => {
                 //2.dispatch action
                 dispatch(setTodoListsAC(res.data))  //затем диспатчим
                 dispatch(setAppStatusAC('succeeded'))
             })
             .catch(error => {
-                handleServerAppError(error,dispatch)
+                handleServerAppError(error, dispatch)
             })
 
     }
@@ -123,7 +124,7 @@ export const fetchTodoListsTC = () => {
 export const removeTodolistTC = (todolistId: string) => {
     return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
-        dispatch(ChangeTodoListEntityStatusAC('loading',todolistId))
+        dispatch(ChangeTodoListEntityStatusAC('loading', todolistId))
         todolistApi.deleteTodo(todolistId)
             .then((res) => {
                 dispatch(RemoveTodoListsAC(todolistId))

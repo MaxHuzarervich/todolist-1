@@ -9,7 +9,7 @@ import {authReducer} from "../login/auth-reducer";
 // мы задаём структуру нашего единственного объекта-состояния
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todoListsReducer,
+    todoLists: todoListsReducer,
     app: appReducer,
     login: authReducer,
 })

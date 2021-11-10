@@ -20,19 +20,20 @@ export type TaskStateType = {
 
 export const App = () => {
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+        //при запуске тут false, видим крутилку
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
     const dispatch = useDispatch()
 
     useEffect(() => {             //санка которая делает запрос на me
         dispatch(initializedAppTC())
-    }, [])
+    }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
     }, [])
 
-    if (!isInitialized) {
+    if (!isInitialized) { //крутилка, при инициализации
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
@@ -57,8 +58,8 @@ export const App = () => {
                 </AppBar>
                 <Container fixed>
                     <Routes>
-                        <Route  path={'/'} element={<TodolistList/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
+                        <Route  path='/' element = {<TodolistList/>} />
+                        <Route path='/login' element = {<Login/>} />
                     </Routes>
                 </Container>
             </div>

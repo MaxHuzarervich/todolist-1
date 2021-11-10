@@ -10,7 +10,7 @@ export const GetTodolists = () => {
     useEffect(() => {
         // здесь мы будем делать запрос и ответ закидывать в стейт.
         // который в виде строки будем отображать в div-ке
-        todolistApi.getTodolists() //делай запросы с объектом setting
+        todolistApi.getTodoLists() //делай запросы с объектом setting
             .then((res) => { //после ответа выполни вот этот коллбек, res - ответ от сервера
                 debugger
                 setState(res.data)

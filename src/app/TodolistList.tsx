@@ -21,24 +21,24 @@ export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
 }
 
-export const TodolistList: React.FC = () => {
+export const TodolistList = () => {
     //BLL:
     //для того чтобы забрать что нужно из redux используем useSelector
     //для того чтобы задиспатчить что то в redux используем hook useDispatch, который нам возвращает
     // функцию dispatch в который мы засовываем action который мы хотим как конструкцию отправить в redux
 
-    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todolists)
+    const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-
+    debugger;
     const dispatch = useDispatch()
 
     useEffect(() => {
         if (!isLoggedIn) {     // если мы не залогинены, то будет прерывание
-            return
+           return
         }
-        dispatch(fetchTodoListsTC())  //получение тудулистов
-
+        const thunk = fetchTodoListsTC()
+        dispatch(thunk)  //получение тудулистов
     }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 
     const removeTask = useCallback(function (taskID: string, todoListID: string) {
@@ -84,6 +84,7 @@ export const TodolistList: React.FC = () => {
     }, [dispatch])
 
     if (!isLoggedIn) {
+        debugger
         return <Redirect to={'/login'}/>
     }
 

@@ -10,10 +10,10 @@ const instance = axios.create({
 })
 
 //если D не передавать то это пустой объект (ДЖЕНЕРИК тип)
-export type CommonResponseType<D = {}> = {
-    fieldsErrors: Array<string>,
-    messages: Array<string>,
+export type ResponseType<D = {}> = {
+    // fieldsErrors: Array<string>,
     resultCode: number,
+    messages: Array<string>,
     data: D
 }
 export type TodolistType = {
@@ -42,7 +42,6 @@ export enum TaskPriorities {
 export type TaskType = {
     description: string,
     title: string,
-    // completed: boolean,
     status: TaskStatuses,
     priority: TaskPriorities,
     startDate: string,
@@ -78,17 +77,17 @@ export type UpdateTaskModelType = {
 
 //объект, который будет заниматься запросами на сервер!
 export const todolistApi = {
-    getTodolists() {
+    getTodoLists() {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodo(title: string) {                 // уточняем D - TodolistType
-        return instance.post<CommonResponseType<{ item: TodolistType }>>('todo-lists', {title})
+        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title})
     },
     deleteTodo(todolistId: string) {
-        return instance.delete<CommonResponseType>(`todo-lists/${todolistId}`)
+        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
     },
     updateTodoTitle(todolistId: string, title: string) {
-        return instance.put<CommonResponseType>(`todo-lists/${todolistId}`, {title})
+        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
     },
     getTasks(todolistId: string) {
         return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
@@ -100,7 +99,7 @@ export const todolistApi = {
         return instance.post<CreateUpdateTaskResponse<{ item: TaskType }>>(`/todo-lists/${todolistId}/tasks`, {title})
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<CommonResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+        return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
     }
 }
 
@@ -113,15 +112,15 @@ export type LoginParamsType = {
 
 export const authAPI = {
     login(data: LoginParamsType) {                                         //делаем запрос на 'auth/login' и отправляем data
-        const promise = instance.post<CommonResponseType<{ userId?: number }>>('auth/login', data)
+        const promise = instance.post<ResponseType<{ userId?: number }>>('auth/login', data)
         return promise
     },
     logout() {
-        const promise = instance.delete<CommonResponseType<{ userId?: number }>>('auth/login')
+        const promise = instance.delete<ResponseType<{ userId?: number }>>('auth/login')
         return promise
     },
     me() {
-        const promise = instance.get<CommonResponseType<{ id: number, email: string, login: string }>>('auth/me')
+        const promise = instance.get<ResponseType<{ id: number, email: string, login: string }>>('auth/me')
         return promise
     }
 }

@@ -15,35 +15,34 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
             return {...state, status: action.status}
         case 'APP/SET-ERROR':
             return {...state, error: action.error}
-        case "APP/SET-IS-INITIALIZED":
+        case 'APP/SET-IS-INITIALIZED':
             return {...state, isInitialized: action.value}
         default:
             return {...state}
     }
 }
 
-export const setAppErrorAC = (error: string | null) => (
-    {type: 'APP/SET-ERROR', error} as const
-)
+//actions
 
-export const setAppStatusAC = (status: RequestStatusType) => (
-    {type: 'APP/SET-STATUS', status} as const
-)
+export const setAppErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
+export const setAppStatusAC = (status: RequestStatusType) => ({type: 'APP/SET-STATUS', status} as const)
+export const SetAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITIALIZED', value} as const)
 
-export const SetAppInitializedAC = (value: boolean) => (
-    {type: 'APP/SET-IS-INITIALIZED', value} as const
-)
+//thunk
 
 export const initializedAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me().then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(setIsLoggedInAC(true))
-        }else{
+    authAPI.me()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true))   //залогинены
+            } else {
 
-        }
-        dispatch(SetAppInitializedAC(true))
-    })
+            }
+            dispatch(SetAppInitializedAC(true))
+        })
 }
+
+//types
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
@@ -59,8 +58,4 @@ export type InitialStateType = {
 export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
 export type SetStatusActionType = ReturnType<typeof setAppStatusAC>;
 export type SetAppInitializedActionType = ReturnType<typeof SetAppInitializedAC>
-export type ActionsType =
-    | SetErrorActionType
-    | SetStatusActionType
-    | SetAppInitializedActionType
-    
+export type ActionsType = SetErrorActionType | SetStatusActionType | SetAppInitializedActionType

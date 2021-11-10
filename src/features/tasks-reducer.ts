@@ -48,7 +48,8 @@ export const tasksReducer =
         switch (action.type) {
             case 'REMOVE-TASK':
                 let todoListTasks = state[action.todoListId];
-                todoListTasks = todoListTasks.filter(task => task.id !== action.taskId);
+                todoListTasks.filter(task => task.id !== action.taskId);
+                // todoListTasks = todoListTasks.filter(task => task.id !== action.taskId);
                 return {
                     ...state,
                     [action.todoListId]: state[action.todoListId].filter(task => task.id !== action.taskId)

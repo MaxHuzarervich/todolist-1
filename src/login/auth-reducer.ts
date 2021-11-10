@@ -7,9 +7,7 @@ type setIsLoggedInAT = {
     type: 'login/SET-IS-LOGGED-IN',
     value: boolean
 }
-
 type ActionsType = setIsLoggedInAT
-
 type initialStateType = {
     isLoggedIn: boolean,
 }
@@ -27,14 +25,12 @@ export const authReducer = (state: initialStateType = initialState, action: Acti
     }
 }
 //actions
-export const setIsLoggedInAC = (value: boolean) => {
-    return {type: 'login/SET-IS-LOGGED-IN', value} as const
-}
+export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-IN', value} as const)
 
 //THUNK - ф-ция которая делает асинхронную операцию и по итогу диспатчит экшн
 //thunkCreator
 
-   export const loginTC = (data: LoginParamsType) => {
+export const loginTC = (data: LoginParamsType) => {
     return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
         dispatch(setAppStatusAC('loading'))
         authAPI.login(data)
@@ -69,5 +65,5 @@ export const logoutTC = () => {
                 handleServerNetworkError(error, dispatch)
             })
     }
- }
+}
 
