@@ -14,10 +14,10 @@ import {AppRootStateType} from "../app/store";
 import {Redirect} from "@reach/router";
 
 export const Login = () => {
+    debugger
+    const dispatch = useDispatch()
     //залогинены или нет? если нет, то возвращаем форму логина
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-
-    const dispatch = useDispatch()
 
     const formik = useFormik({
         validate: (values) => {
@@ -45,8 +45,9 @@ export const Login = () => {
     if (isLoggedIn) {                     //если мы не залогинены, то код идет дальше и возвращает форму логина
         return <Redirect to={'/'}/>      // и наоборот если залогинены редиректит к тудулистам)
     }
-
-    return <Grid container justifyContent={'center'}>
+    debugger
+    return <>
+    <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>
             <form onSubmit={formik.handleSubmit}>
                 <FormControl>
@@ -87,4 +88,5 @@ export const Login = () => {
             </form>
         </Grid>
     </Grid>
+    </>
 }
