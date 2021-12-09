@@ -5,9 +5,9 @@ import * as serviceWorker from './serviceWorker';
 import {App} from "./app/App";
 import {Provider} from "react-redux";
 import {store} from "./app/store";
-// import AppWithReducers from "./app/AppWithReducers";
+import AppWithReducers from "./app/AppWithReducers";
 
-// const AppWithReducersComponent = AppWithReducers
+const AppWithReducersComponent = AppWithReducers
 
 ReactDOM.render(
     <Provider store={store}>

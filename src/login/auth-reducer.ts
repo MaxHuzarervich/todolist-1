@@ -47,7 +47,7 @@ export const loginTC = (data: LoginParamsType) => {
             })
     }
 }
-//замыкание - здесь наша санка использует параметры из санккреатора           !!!!!!!
+//замыкание - здесь наша санка использует параметры из TC           !!!!!!!
 
 export const logoutTC = () => {
     return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {

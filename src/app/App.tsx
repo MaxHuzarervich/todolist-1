@@ -31,7 +31,6 @@ export const App = () => {
     }, [dispatch]) //пустой массив зависимостей, значит эффект будет вызван один раз
 
     const logoutHandler = useCallback(() => {
-        debugger
         dispatch(logoutTC())
     }, [dispatch])
 

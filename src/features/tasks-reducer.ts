@@ -145,8 +145,7 @@ export const removeTaskTC = (taskID: string, todoListID: string) => {
     return (dispatch: Dispatch) => {
         todolistApi.deleteTask(todoListID, taskID)
             .then((res) => {
-                let action = removeTaskAC(taskID, todoListID)
-                dispatch(action)
+                dispatch(removeTaskAC(taskID, todoListID))
             })
     }
 }

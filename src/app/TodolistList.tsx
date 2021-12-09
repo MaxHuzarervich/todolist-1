@@ -39,7 +39,7 @@ export const TodolistList = () => {
         }
         const thunk = fetchTodoListsTC()
         dispatch(thunk)  //получение тудулистов
-    }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
+    }, [dispatch]) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 
     const removeTask = useCallback(function (taskID: string, todoListID: string) {
         const thunk = removeTaskTC(taskID, todoListID) //получаем санку при помощи санкреатора и диспатчим ее
