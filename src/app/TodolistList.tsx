@@ -35,53 +35,53 @@ export const TodolistList = () => {
 
     useEffect(() => {
         if (!isLoggedIn) {     // если мы не залогинены, то будет прерывание
-           return
+            return;
         }
         const thunk = fetchTodoListsTC()
         dispatch(thunk)  //получение тудулистов
-    }, [dispatch]) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
+    }, []) // зависимостей нет, поэтому выполни его всего один раз когда вмонтируешься
 
     const removeTask = useCallback(function (taskID: string, todoListID: string) {
         const thunk = removeTaskTC(taskID, todoListID) //получаем санку при помощи санкреатора и диспатчим ее
         dispatch(thunk)
-    }, [dispatch])
+    }, [])
 
     const addTask = useCallback((title: string, todoListID: string) => {
         let action = addTaskTC(todoListID, title)
         dispatch(action)
-    }, [dispatch])
+    }, [])
 
     const changeTaskStatus = useCallback((taskID: string, status: TaskStatuses, todoListID: string) => {
         let thunk = updateTaskTC(taskID, {status}, todoListID)
         dispatch(thunk)
-    }, [dispatch])
+    }, [])
 
     const changeTaskTitle = useCallback((taskID: string, newTitle: string, todoListID: string) => {
         let action = updateTaskTC(taskID, {title: newTitle}, todoListID)
         dispatch(action)
-    }, [dispatch])
+    }, [])
 
     //todolist:
 
     const changeFilter = useCallback((value: FilterValuesType, todoListID: string) => {
         let action = ChangeTodoListFilterAC(value, todoListID)
         dispatch(action)
-    }, [dispatch])
+    }, [])
 
     const changeTodolistTitle = useCallback((title: string, todoListID: string) => {
         let thunk = changeTodolistTitleTC(todoListID, title)
         dispatch(thunk)
-    }, [dispatch])
+    }, [])
 
     const removeTodolist = useCallback((todoListID: string) => {
         let action = removeTodolistTC(todoListID)
         dispatch(action)
-    }, [dispatch])
+    }, [])
 
     const addTodolist = useCallback((title: string) => {
         let thunk = addTodolistTC(title)
         dispatch(thunk)
-    }, [dispatch])
+    }, [])
 
     if (!isLoggedIn) {
         debugger

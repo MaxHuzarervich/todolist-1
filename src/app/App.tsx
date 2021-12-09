@@ -13,6 +13,7 @@ import {Routes} from "react-router-dom";
 import {TaskType} from "../api/todolist-api";
 import {CircularProgress} from "@mui/material";
 import {logoutTC} from "../login/auth-reducer";
+import {Redirect} from "@reach/router";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -26,13 +27,13 @@ export const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {             //санка которая делает запрос на me
-        const thunk = initializedAppTC()
-        dispatch(thunk)
-    }, [dispatch]) //пустой массив зависимостей, значит эффект будет вызван один раз
+       debugger
+        dispatch(initializedAppTC())
+    }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
-    }, [dispatch])
+    }, [])
 
     if (!isInitialized) { //крутилка, при инициализации
         debugger
