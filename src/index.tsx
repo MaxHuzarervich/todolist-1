@@ -6,12 +6,15 @@ import {App} from "./app/App";
 import {Provider} from "react-redux";
 import {store} from "./app/store";
 import AppWithReducers from "./app/AppWithReducers";
+import {BrowserRouter} from "react-router-dom";
 
 const AppWithReducersComponent = AppWithReducers
 
 ReactDOM.render(
     <Provider store={store}>
+        <BrowserRouter>
         <App/>
+            </BrowserRouter>
     </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

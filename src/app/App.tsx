@@ -8,18 +8,19 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {Login} from "../login/login";
 import {TodolistList} from './TodolistList';
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter,useNavigate, Route} from "react-router-dom";
 import {Routes} from "react-router-dom";
 import {TaskType} from "../api/todolist-api";
 import {CircularProgress} from "@mui/material";
 import {logoutTC} from "../login/auth-reducer";
-import {Redirect} from "@reach/router";
+
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
 }
 
 export const App = () => {
+    const navigate = useNavigate()
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     //при запуске тут false, видим крутилку
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
@@ -27,23 +28,28 @@ export const App = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {             //санка которая делает запрос на me
-       debugger
         dispatch(initializedAppTC())
     }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
-    const logoutHandler = useCallback(() => {
-        dispatch(logoutTC())
-    }, [])
+    const logoutHandler = useCallback(() => {dispatch(logoutTC())}, [])
+
+
+    useEffect(() => {
+        console.log(isLoggedIn)
+        if (!isLoggedIn && isInitialized) {
+            navigate("/login")
+        }
+    }, [isLoggedIn,isInitialized])
 
     if (!isInitialized) { //крутилка, при инициализации
-        debugger
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
             <CircularProgress/>
         </div>
     }
 
+
     return (
-        <BrowserRouter>
+
             <div>
                 <ErrorSnackbar/>
                 <AppBar position={'static'}>
@@ -66,6 +72,6 @@ export const App = () => {
                     </Routes>
                 </Container>
             </div>
-        </BrowserRouter>
+
     );
 }

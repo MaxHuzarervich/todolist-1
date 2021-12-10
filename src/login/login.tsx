@@ -14,7 +14,7 @@ import {AppRootStateType} from "../app/store";
 import {Redirect} from "@reach/router";
 
 export const Login = () => {
-    debugger
+    // debugger
     const dispatch = useDispatch()
     //залогинены или нет? если нет, то возвращаем форму логина
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
@@ -45,7 +45,7 @@ export const Login = () => {
     if (isLoggedIn) { debugger                    //если мы не залогинены, то код идет дальше и возвращает форму логина
         return <Redirect to={'/'}/>      // и наоборот если залогинены редиректит к тудулистам)
     }
-    debugger
+    // debugger
     return <>
     <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

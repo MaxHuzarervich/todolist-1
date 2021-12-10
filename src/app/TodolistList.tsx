@@ -15,7 +15,7 @@ import {
 } from "../features/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
-import {Redirect} from "@reach/router";
+import {Redirect, useNavigate} from "@reach/router";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -83,10 +83,7 @@ export const TodolistList = () => {
         dispatch(thunk)
     }, [])
 
-    if (!isLoggedIn) {
-        debugger
-        return <Redirect to={'/login'}/>
-    }
+
 
     return <>
         <Grid container style={{padding: '20px 0px '}}>
