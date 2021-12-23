@@ -14,9 +14,7 @@ import {AppRootStateType} from "../app/store";
 import {Redirect} from "@reach/router";
 
 export const Login = () => {
-    // debugger
     const dispatch = useDispatch()
-    //залогинены или нет? если нет, то возвращаем форму логина
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
     const formik = useFormik({

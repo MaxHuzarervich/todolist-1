@@ -8,8 +8,7 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {Login} from "../login/login";
 import {TodolistList} from './TodolistList';
-import {BrowserRouter,useNavigate, Route} from "react-router-dom";
-import {Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import {TaskType} from "../api/todolist-api";
 import {CircularProgress} from "@mui/material";
 import {logoutTC} from "../login/auth-reducer";
@@ -31,15 +30,17 @@ export const App = () => {
         dispatch(initializedAppTC())
     }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
-    const logoutHandler = useCallback(() => {dispatch(logoutTC())}, [])
+    const logoutHandler = useCallback(() => {
+        dispatch(logoutTC())
+    }, [])
 
 
     useEffect(() => {
         console.log(isLoggedIn)
         if (!isLoggedIn && isInitialized) {
             navigate("/login")
-        }
-    }, [isLoggedIn,isInitialized])
+        }else if(isLoggedIn){navigate('/')}
+    }, [isLoggedIn, isInitialized])
 
     if (!isInitialized) { //крутилка, при инициализации
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -50,28 +51,28 @@ export const App = () => {
 
     return (
 
-            <div>
-                <ErrorSnackbar/>
-                <AppBar position={'static'}>
-                    <Toolbar style={{justifyContent: 'space-between'}}>
-                        <IconButton color={'inherit'}>
-                            <Menu/>
-                        </IconButton>
-                        <Typography variant={'h6'}>
-                            TodoLists
-                        </Typography>
-                        {isLoggedIn &&      //если залогинены, то покажи эту кнопку --->
-                        <Button color={'inherit'} variant={'outlined'} onClick={logoutHandler}>Log out</Button>}
-                    </Toolbar>
-                    {status === 'loading' && <LinearProgress/>}
-                </AppBar>
-                <Container fixed>
-                    <Routes>
-                        <Route path='/' element={<TodolistList/>}/>
-                        <Route path='/login' element={<Login/>}/>
-                    </Routes>
-                </Container>
-            </div>
+        <div>
+            <ErrorSnackbar/>
+            <AppBar position={'static'}>
+                <Toolbar style={{justifyContent: 'space-between'}}>
+                    <IconButton color={'inherit'}>
+                        <Menu/>
+                    </IconButton>
+                    <Typography variant={'h6'}>
+                        TodoLists
+                    </Typography>
+                    {isLoggedIn &&      //если залогинены, то покажи эту кнопку --->
+                    <Button color={'inherit'} variant={'outlined'} onClick={logoutHandler}>Log out</Button>}
+                </Toolbar>
+                {status === 'loading' && <LinearProgress/>}
+            </AppBar>
+            <Container fixed>
+                <Routes>
+                    <Route path='/' element={<TodolistList/>}/>
+                    <Route path='/login' element={<Login/>}/>
+                </Routes>
+            </Container>
+        </div>
 
     );
 }

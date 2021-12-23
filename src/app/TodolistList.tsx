@@ -15,7 +15,7 @@ import {
 } from "../features/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
-import {Redirect, useNavigate} from "@reach/router";
+import {useNavigate} from "react-router-dom";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -26,7 +26,7 @@ export const TodolistList = () => {
     //для того чтобы забрать что нужно из redux используем useSelector
     //для того чтобы задиспатчить что то в redux используем hook useDispatch, который нам возвращает
     // функцию dispatch в который мы засовываем action который мы хотим как конструкцию отправить в redux
-
+    const navigate = useNavigate()
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
@@ -82,7 +82,12 @@ export const TodolistList = () => {
         let thunk = addTodolistTC(title)
         dispatch(thunk)
     }, [])
-
+    useEffect(() => {
+        console.log(isLoggedIn)
+        if (!isLoggedIn) {
+            navigate("/login")
+        }
+    }, [isLoggedIn])
 
 
     return <>

@@ -8,6 +8,7 @@ type setIsLoggedInAT = {
     value: boolean
 }
 type ActionsType = setIsLoggedInAT
+
 type initialStateType = {
     isLoggedIn: boolean,
 }
@@ -43,7 +44,7 @@ export const loginTC = (data: LoginParamsType) => {
                 }
             })
             .catch((error) => {
-                handleServerNetworkError(error, dispatch)
+                handleServerNetworkError (error, dispatch)
             })
     }
 }
