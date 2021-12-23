@@ -30,7 +30,7 @@ export const TodolistList = () => {
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    debugger;
+
     const dispatch = useDispatch()
 
     useEffect(() => {
