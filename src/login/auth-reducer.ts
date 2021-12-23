@@ -52,7 +52,6 @@ export const loginTC = (data: LoginParamsType) => {
 
 export const logoutTC = () => {
     return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
-        debugger
         dispatch(setAppStatusAC('loading'))
         authAPI.logout()
             .then(res => {
