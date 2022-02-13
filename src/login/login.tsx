@@ -40,10 +40,9 @@ export const Login = () => {
         },
     });
 
-    if (isLoggedIn) { debugger                    //если мы не залогинены, то код идет дальше и возвращает форму логина
+    if (isLoggedIn) {                     //если мы не залогинены, то код идет дальше и возвращает форму логина
         return <Redirect to={'/'}/>      // и наоборот если залогинены редиректит к тудулистам)
     }
-    // debugger
     return <>
     <Grid container justifyContent={'center'}>
         <Grid item justifyContent={'center'}>

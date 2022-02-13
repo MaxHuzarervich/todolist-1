@@ -8,7 +8,7 @@ import {ErrorSnackbar} from "../components/ErrorSnackbar/ErrorSnackbar";
 import {initializedAppTC, RequestStatusType} from "./app-reducer";
 import {Login} from "../login/login";
 import {TodolistList} from './TodolistList';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {TaskType} from "../api/todolist-api";
 import {CircularProgress} from "@mui/material";
 import {logoutTC} from "../login/auth-reducer";
@@ -19,7 +19,7 @@ export type TaskStateType = {
 }
 
 export const App = () => {
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
     //при запуске тут false, видим крутилку
     const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
@@ -28,19 +28,20 @@ export const App = () => {
 
     useEffect(() => {             //санка которая делает запрос на me
         dispatch(initializedAppTC())
+
     }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
-    }, [])
+    }, [dispatch])
 
 
-    useEffect(() => {
-        console.log(isLoggedIn)
-        if (!isLoggedIn && isInitialized) {
-            navigate("/login")
-        }else if(isLoggedIn){navigate('/')}
-    }, [isLoggedIn, isInitialized])
+    // useEffect(() => {
+    //     console.log(isLoggedIn)
+    //     if (!isLoggedIn && isInitialized) {
+    //         navigate("/login")
+    //     }
+    // }, [isLoggedIn, isInitialized])
 
     if (!isInitialized) { //крутилка, при инициализации
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -48,9 +49,7 @@ export const App = () => {
         </div>
     }
 
-
     return (
-
         <div>
             <ErrorSnackbar/>
             <AppBar position={'static'}>

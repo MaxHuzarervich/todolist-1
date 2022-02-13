@@ -83,7 +83,6 @@ export const TodolistList = () => {
         dispatch(thunk)
     }, [])
     useEffect(() => {
-        console.log(isLoggedIn)
         if (!isLoggedIn) {
             navigate("/login")
         }

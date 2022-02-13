@@ -11,16 +11,16 @@ const instance = axios.create({
 
 //если D не передавать то это пустой объект (ДЖЕНЕРИК тип)
 export type ResponseType<D = {}> = {
-    // fieldsErrors: Array<string>,
     resultCode: number,
     messages: Array<string>,
+    // fieldsErrors: Array<string>,
     data: D
 }
 export type TodolistType = {
-    id: string,
-    addedDate: string,
-    order: number,
+    id: string
     title: string
+    addedDate: string
+    order: number
 }
 
 
@@ -106,7 +106,7 @@ export const todolistApi = {
 export type LoginParamsType = {
     email: string,
     password: string,
-    rememberMe: boolean,
+    rememberMe?: boolean,
     captcha?: string
 }
 

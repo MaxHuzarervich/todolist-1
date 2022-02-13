@@ -44,7 +44,7 @@ export const loginTC = (data: LoginParamsType) => {
                 }
             })
             .catch((error) => {
-                handleServerNetworkError (error, dispatch)
+                handleServerNetworkError(error, dispatch)
             })
     }
 }

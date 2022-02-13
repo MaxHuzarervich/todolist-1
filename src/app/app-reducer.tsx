@@ -3,6 +3,19 @@ import {Dispatch} from "redux";
 import {authAPI} from "../api/todolist-api";
 import {setIsLoggedInAC} from "../login/auth-reducer";
 
+//types
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
+export type InitialStateType = {
+    //происходит ли сейчас взаимодействие с сервером
+    status: RequestStatusType,
+    //если произойдет какая-то глобальная ошибка - мы запишем текст ошибки сюда
+    error: null | string,
+    //true когда приложение проинициализировалось (проверили юзера, настройки проверили и т.д.)
+    isInitialized: boolean
+}
+
 export const initialState: InitialStateType = {
     status: 'idle',
     error: null,
@@ -31,26 +44,12 @@ export const SetAppInitializedAC = (value: boolean) => ({type: 'APP/SET-IS-INITI
 //thunk
 
 export const initializedAppTC = () => (dispatch: Dispatch) => {
-    authAPI.me()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(setIsLoggedInAC(true))   //залогинены
-            }
-            dispatch(SetAppInitializedAC(true))
-        })
-}
-
-//types
-
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-
-export type InitialStateType = {
-    //происходит ли сейчас взаимодействие с сервером
-    status: RequestStatusType,
-    //если произойдет какая-то глобальная ошибка - мы запишем текст ошибки сюда
-    error: null | string,
-    //true когда приложение проинициализировалось (проверили юзера, настройки проверили и т.д.)
-    isInitialized: boolean
+    authAPI.me().then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(setIsLoggedInAC(true))   //залогинены
+        }
+    })
+        .finally(() => dispatch(SetAppInitializedAC(true)))
 }
 
 export type SetErrorActionType = ReturnType<typeof setAppErrorAC>;
