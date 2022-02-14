@@ -2,12 +2,12 @@ import {authAPI, LoginParamsType} from "../api/todolist-api";
 import {Dispatch} from "redux";
 import {setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../utils/error-utils";
+import {AxiosError} from "axios";
 
 type setIsLoggedInAT = {
     type: 'login/SET-IS-LOGGED-IN',
     value: boolean
 }
-type ActionsType = setIsLoggedInAT
 
 type initialStateType = {
     isLoggedIn: boolean,
@@ -16,9 +16,10 @@ const initialState: initialStateType = {
     isLoggedIn: false
 }
 
-export const authReducer = (state: initialStateType = initialState, action: ActionsType): initialStateType => {
+export const authReducer = (state: initialStateType = initialState, action: setIsLoggedInAT): initialStateType => {
     switch (action.type) {
-        case "login/SET-IS-LOGGED-IN":
+        case 'login/SET-IS-LOGGED-IN':
+            debugger
             return {...state, isLoggedIn: action.value} // подменяем в state значение isLoggedIn
         // на то которое сидит в экшене под значением value
         default:
@@ -31,11 +32,10 @@ export const setIsLoggedInAC = (value: boolean) => ({type: 'login/SET-IS-LOGGED-
 //THUNK - ф-ция которая делает асинхронную операцию и по итогу диспатчит экшн
 //thunkCreator
 
-export const loginTC = (data: LoginParamsType) => {
-    return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
+export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<setIsLoggedInAT | SetStatusActionType | SetErrorActionType>) => {
         dispatch(setAppStatusAC('loading'))
         authAPI.login(data)
-            .then(res => {
+            .then(res => {debugger
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(true))
                     dispatch(setAppStatusAC('succeeded'))
@@ -43,15 +43,15 @@ export const loginTC = (data: LoginParamsType) => {
                     handleServerAppError(res.data, dispatch);
                 }
             })
-            .catch((error) => {
+            .catch((error: AxiosError) => {
                 handleServerNetworkError(error, dispatch)
             })
     }
-}
+
 //замыкание - здесь наша санка использует параметры из TC           !!!!!!!
 
 export const logoutTC = () => {
-    return (dispatch: Dispatch<ActionsType | SetStatusActionType | SetErrorActionType>) => {
+    return (dispatch: Dispatch<setIsLoggedInAT | SetStatusActionType | SetErrorActionType>) => {
         dispatch(setAppStatusAC('loading'))
         authAPI.logout()
             .then(res => {
@@ -62,7 +62,7 @@ export const logoutTC = () => {
                     handleServerAppError(res.data, dispatch);
                 }
             })
-            .catch((error) => {
+            .catch((error: AxiosError) => {
                 handleServerNetworkError(error, dispatch)
             })
     }

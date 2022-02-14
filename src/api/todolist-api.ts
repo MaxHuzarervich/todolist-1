@@ -11,9 +11,8 @@ const instance = axios.create({
 
 //если D не передавать то это пустой объект (ДЖЕНЕРИК тип)
 export type ResponseType<D = {}> = {
-    resultCode: number,
-    messages: Array<string>,
-    // fieldsErrors: Array<string>,
+    resultCode: number
+    messages: Array<string>
     data: D
 }
 export type TodolistType = {

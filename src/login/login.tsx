@@ -37,11 +37,12 @@ export const Login = () => {
         },
         onSubmit: values => {  // коллбек в который придут все значения которые форма собрала во время своего сабмита
             dispatch(loginTC(values)) //санка отправляет данные на сервер
+            formik.resetForm()
         },
-    });
+    })
 
     if (isLoggedIn) {                     //если мы не залогинены, то код идет дальше и возвращает форму логина
-        return <Redirect to={'/'}/>      // и наоборот если залогинены редиректит к тудулистам)
+        return <Redirect to='/'/>      // и наоборот если залогинены редиректит к тудулистам)
     }
     return <>
     <Grid container justifyContent={'center'}>

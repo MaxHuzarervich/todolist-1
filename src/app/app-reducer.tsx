@@ -1,7 +1,8 @@
-import React from "react";
 import {Dispatch} from "redux";
 import {authAPI} from "../api/todolist-api";
 import {setIsLoggedInAC} from "../login/auth-reducer";
+import {AxiosError} from "axios";
+import {handleServerNetworkError} from "../utils/error-utils";
 
 //types
 
@@ -47,8 +48,12 @@ export const initializedAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
         if (res.data.resultCode === 0) {
             dispatch(setIsLoggedInAC(true))   //залогинены
+            dispatch(SetAppInitializedAC(true))
         }
     })
+        .catch((error: AxiosError) => {
+            handleServerNetworkError(error, dispatch)
+        })
         .finally(() => dispatch(SetAppInitializedAC(true)))
 }
 

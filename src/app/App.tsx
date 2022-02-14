@@ -28,20 +28,11 @@ export const App = () => {
 
     useEffect(() => {             //санка которая делает запрос на me
         dispatch(initializedAppTC())
-
     }, []) //пустой массив зависимостей, значит эффект будет вызван один раз
 
     const logoutHandler = useCallback(() => {
         dispatch(logoutTC())
-    }, [dispatch])
-
-
-    // useEffect(() => {
-    //     console.log(isLoggedIn)
-    //     if (!isLoggedIn && isInitialized) {
-    //         navigate("/login")
-    //     }
-    // }, [isLoggedIn, isInitialized])
+    }, [])
 
     if (!isInitialized) { //крутилка, при инициализации
         return <div style={{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
@@ -68,7 +59,8 @@ export const App = () => {
             <Container fixed>
                 <Routes>
                     <Route path='/' element={<TodolistList/>}/>
-                    <Route path='/login' element={<Login/>}/>
+                    <Route path='login' element={<Login/>}/>
+                    <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
                 </Routes>
             </Container>
         </div>
