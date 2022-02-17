@@ -16,6 +16,7 @@ import {
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
 import {useNavigate} from "react-router-dom";
+import {Redirect} from "@reach/router";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -34,8 +35,9 @@ export const TodolistList = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        debugger
         if (!isLoggedIn) {     // если мы не залогинены, то будет прерывание
-            return;
+            return
         }
         const thunk = fetchTodoListsTC()
         dispatch(thunk)  //получение тудулистов
@@ -82,6 +84,7 @@ export const TodolistList = () => {
         let thunk = addTodolistTC(title)
         dispatch(thunk)
     }, [])
+
     useEffect(() => {
         if (!isLoggedIn) {
             navigate("/login")

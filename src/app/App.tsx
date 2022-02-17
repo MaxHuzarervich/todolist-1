@@ -60,7 +60,6 @@ export const App = () => {
                 <Routes>
                     <Route path='/' element={<TodolistList/>}/>
                     <Route path='login' element={<Login/>}/>
-                    <Route path='/404' element={<h1>404: PAGE NOT FOUND</h1>}/>
                 </Routes>
             </Container>
         </div>
