@@ -105,7 +105,7 @@ export const setTodoListsAC = (todoLists: Array<TodolistType>): SetTodoListsAT =
 //thunkCreator
 
 export const fetchTodoListsTC = () => {
-    return (dispatch: ThunkDispatch): void => {
+    return (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         //1.side effect
         todolistApi.getTodoLists()              //делаем запрос

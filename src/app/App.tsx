@@ -20,11 +20,11 @@ export type TaskStateType = {
 
 export const App = () => {
     // const navigate = useNavigate()
-    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status)
+    const status = useSelector<AppRootStateType, RequestStatusType>((state) => state.app.status),
     //при запуске тут false, видим крутилку
-    const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized)
-    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
-    const dispatch = useDispatch()
+     isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized),
+     isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn),
+     dispatch = useDispatch()
 
     useEffect(() => {             //санка которая делает запрос на me
         dispatch(initializedAppTC())

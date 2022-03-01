@@ -19,7 +19,6 @@ const initialState: initialStateType = {
 export const authReducer = (state: initialStateType = initialState, action: setIsLoggedInAT): initialStateType => {
     switch (action.type) {
         case 'login/SET-IS-LOGGED-IN':
-            debugger
             return {...state, isLoggedIn: action.value} // подменяем в state значение isLoggedIn
         // на то которое сидит в экшене под значением value
         default:
@@ -36,7 +35,6 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<setIsLogge
         dispatch(setAppStatusAC('loading'))
         authAPI.login(data)
             .then(res => {
-                debugger
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(true))
                     dispatch(setAppStatusAC('succeeded'))
@@ -45,7 +43,6 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<setIsLogge
                 }
             })
             .catch((error: AxiosError) => {
-                debugger
                 handleServerNetworkError(error, dispatch)
             })
     }
@@ -58,11 +55,9 @@ export const logoutTC = () => {
         authAPI.logout()
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    debugger
                     dispatch(setIsLoggedInAC(false))
                     dispatch(setAppStatusAC('succeeded'))
                 } else {
-                    debugger
                     handleServerAppError(res.data, dispatch);
                 }
             })

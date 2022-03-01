@@ -5,17 +5,15 @@ import * as serviceWorker from './serviceWorker';
 import {App} from "./app/App";
 import {Provider} from "react-redux";
 import {store} from "./app/store";
-import {HashRouter} from "react-router-dom";
-
-// const AppWithReducersComponent = AppWithReducers
+import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
     <React.StrictMode>
-        <HashRouter>
+        <BrowserRouter>
             <Provider store={store}>
                 <App/>
             </Provider>
-        </HashRouter>
+        </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
 );

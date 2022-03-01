@@ -15,8 +15,7 @@ import {
 } from "../features/todolists-reducer";
 import {addTaskTC, removeTaskTC, updateTaskTC} from "../features/tasks-reducer";
 import {TaskStatuses, TaskType} from "../api/todolist-api";
-import {useNavigate} from "react-router-dom";
-import {Redirect} from "@reach/router";
+import {Navigate} from "react-router-dom";
 
 export type TaskStateType = {
     [key: string]: Array<TaskType>          //типизация для вычисляемого значения
@@ -27,15 +26,13 @@ export const TodolistList = () => {
     //для того чтобы забрать что нужно из redux используем useSelector
     //для того чтобы задиспатчить что то в redux используем hook useDispatch, который нам возвращает
     // функцию dispatch в который мы засовываем action который мы хотим как конструкцию отправить в redux
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
     const todoLists = useSelector<AppRootStateType, TodolistDomainType[]>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TaskStateType>(state => state.tasks)
+    const dispatch = useDispatch()
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn)
 
-    const dispatch = useDispatch()
-
     useEffect(() => {
-        debugger
         if (!isLoggedIn) {     // если мы не залогинены, то будет прерывание
             return
         }
@@ -85,12 +82,9 @@ export const TodolistList = () => {
         dispatch(thunk)
     }, [])
 
-    useEffect(() => {
-        if (!isLoggedIn) {
-            navigate("/login")
-        }
-    }, [isLoggedIn])
-
+    if (!isLoggedIn) {
+        return <Navigate to='login'/>
+    }
 
     return <>
         <Grid container style={{padding: '20px 0px '}}>
