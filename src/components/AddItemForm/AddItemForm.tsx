@@ -40,7 +40,7 @@ export const AddItemForm = React.memo(({addItem, disabled = false}:AddItemFormPr
             <TextField
                 disabled={disabled}
                 variant={'outlined'}
-                error={!error}
+                error={error}
                 value={title}
                 onChange={onChangeTitle}
                 onKeyPress={onKeyPressAddItem}

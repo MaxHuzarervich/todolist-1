@@ -40,7 +40,6 @@ export function App() {
     }
 
     return (
-        <BrowserRouter>
             <div>
                 <ErrorSnackbar/>
                 <AppBar position={'static'}>
@@ -63,6 +62,5 @@ export function App() {
                     </Routes>
                 </Container>
             </div>
-        </BrowserRouter>
     );
 }

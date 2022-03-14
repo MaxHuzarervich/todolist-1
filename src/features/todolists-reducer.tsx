@@ -1,12 +1,6 @@
 import {todolistApi, TodolistType} from "../api/todolist-api";
 import {Dispatch} from "redux";
-import {
-    RequestStatusType,
-    setAppErrorAC,
-    setAppStatusAC,
-    SetErrorActionType,
-    SetStatusActionType
-} from "../app/app-reducer";
+import {RequestStatusType, setAppStatusAC, SetErrorActionType, SetStatusActionType} from "../app/app-reducer";
 import {handleServerNetworkError} from "../utils/error-utils";
 
 export type RemoveTodoListAT = {
