@@ -21,16 +21,15 @@ type TodoListPropsType = {
     changeTodolistTitle: (title: string, todoListID: string) => void
 }
 
-const TodoList = React.memo(({...props}: TodoListPropsType) => {
+const TodoList = React.memo(function ({...props}: TodoListPropsType) {
+    console.log('Todolist called')
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(fetchTasksTC(props.todolist.id)) //получить таски тудулиста
-    }, [dispatch])
+    }, [])
 
-
-    // const {filter} = props
 
     const onClickAllFilter = useCallback(() => props.changeFilter("all", props.todolist.id),
         [props.changeFilter, props.todolist.id])
