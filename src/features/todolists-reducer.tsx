@@ -7,7 +7,7 @@ import {
     SetErrorActionType,
     SetStatusActionType
 } from "../app/app-reducer";
-import {handleServerAppError} from "../utils/error-utils";
+import {handleServerNetworkError} from "../utils/error-utils";
 
 export type RemoveTodoListAT = {
     type: 'REMOVE-TODOLIST'
@@ -111,20 +111,17 @@ export const setTodoListsAC = (todoLists: TodolistType[]): SetTodoListsAT => {
 //thunkCreator
 
 export const fetchTodoListsTC = () => {
-    debugger
     return (dispatch: Dispatch) => {
         dispatch(setAppStatusAC('loading'))
         //1.side effect
         todolistApi.getTodoLists()              //делаем запрос
             .then((res) => {
                 //2.dispatch action
-                debugger
                 dispatch(setTodoListsAC(res.data))  //затем диспатчим
                 dispatch(setAppStatusAC('succeeded'))
             })
             .catch(error => {
-                dispatch(setAppErrorAC(error.message))
-                dispatch(setAppStatusAC('failed'))
+                handleServerNetworkError(error, dispatch)
             })
 
     }

@@ -97,7 +97,6 @@ export const TodolistsList: React.FC<PropsType> = ({demo = false})=> {
         <Grid container spacing={3}>
             {
                 todoLists.map(tl => {
-                    debugger
                     return <Grid item key={tl.id}>
                         <Paper elevation={10}
                                style={{
